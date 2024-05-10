@@ -1,5 +1,5 @@
 import { Container as MapDiv, NaverMap, Marker } from "react-naver-maps";
-
+import { useNavigate } from "react-router-dom";
 import React, { useState, useCallback, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import AppSplash from "../App_Splash_Components/AppSplash";
@@ -26,8 +26,12 @@ const AppMap = () => {
   const [newPosition, setNewPosition] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sliderHeight, setSliderHeight] = useState("167px");
-  const [isContainersVisible, setIsContainersVisible] = useState(true);
+  const [isContainersVisible, setIsContainersVisible] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
   const toggleContainersVisibility = () => {
     setIsContainersVisible(false);
   };
@@ -168,6 +172,7 @@ const AppMap = () => {
           //onInitialized={(map) => setNaverMap(map)}
           onClick={handleMapClick}
         >
+          <BackgroundBlur isOpen={isNavOpen} onClick={toggleNav} />
           <SearchContainer isVisible={isContainersVisible}>
             <InputGroup>
               <SearchInput
@@ -175,12 +180,13 @@ const AppMap = () => {
                 placeholder="건물명 또는 건물번호 입력"
                 value={searchQuery}
                 onChange={handleSearchChange}
+                disabled={isNavOpen}
               />
-              <MenuButton />
+              <MenuButton onClick={toggleNav} />
             </InputGroup>
             <FindRouteButton />
+            {isNavOpen && <Navigation />}
           </SearchContainer>
-
           {currentPosition && (
             <NaverMap
               draggable
@@ -259,7 +265,10 @@ const SliderContent = styled.div`
 const InputGroup = styled.div`
   position: relative;
 `;
-const SearchContainer = styled.div`
+const SearchContainer = styled.div.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    !["isVisible"].includes(prop),
+})`
   display: ${(props) => (props.isVisible ? "flex" : "none")};
   position: absolute;
   top: 0;
@@ -275,14 +284,13 @@ const SearchInput = styled.input`
   border-color: #0094ff;
   border-radius: 8px;
   padding: 16px 67px 15px 47px;
-  //text-indent: 28px;
+  font-size: ${(props) => props.theme.Web_fontSizes.Body5};
 
   &::placeholder {
     font-size: ${(props) => props.theme.Web_fontSizes.Body5};
-    font-weight: ${(props) => props.theme.fontWeights.Body5};
+    font-weight: 600;
     line-height: ${(props) => props.theme.LineHeight.Body5};
-    color: ${(props) => props.theme.colors.black_50};
-    font-family: "Pretendard";
+    color: #d9d9d9;
   }
   &:focus {
     background-image: none;
@@ -298,12 +306,64 @@ const FindRouteButton = styled.button`
   background-size: cover;
   border: none;
   padding: 0;
-  margin-left: 8px;
+  margin-left: 5px;
 `;
 const MenuButton = styled.button`
   position: absolute;
-  width: 24px;
+  width: 25px;
+  height: 25px;
+  top: 14px;
   left: 13px;
   border: none;
   background-image: url(${NavigationDrawer});
+  background-size: cover;
+`;
+const Navigation = () => {
+  const handleNavClick = (e) => {
+    e.stopPropagation();
+  };
+  const navigate = useNavigate();
+
+  return (
+    <NavigationDrawerWrapper onClick={handleNavClick}>
+      <NavigationDrawerContent>📍 길찾기</NavigationDrawerContent>
+      <NavigationDrawerContent onClick={() => navigate("/map")}>
+        🧭 내비게이션
+      </NavigationDrawerContent>
+      <NavigationDrawerContent onClick={() => navigate("/floor")}>
+        🏢 시설정보
+      </NavigationDrawerContent>
+      <NavigationDrawerContent onClick={() => navigate("/setting")}>
+        ⚙️ 설정
+      </NavigationDrawerContent>
+    </NavigationDrawerWrapper>
+  );
+};
+const NavigationDrawerWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 264px;
+  background-color: #ffffff;
+  z-index: 999;
+  overflow-y: auto;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+`;
+
+const NavigationDrawerContent = styled.div`
+  padding: 30px;
+  font-weight: 600;
+`;
+
+const BackgroundBlur = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: ${(props) => (props.isOpen ? "block" : "none")};
 `;

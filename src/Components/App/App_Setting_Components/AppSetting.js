@@ -16,10 +16,14 @@ const Header1 = styled.div`
 
 const AppSetting = () => {
   const { i18n } = useTranslation();
+  const [lang, setLang] = React.useState(i18n.language);
 
   const toggleLanguage = () => {
     const currentLanguage = i18n.language;
-    i18n.changeLanguage(currentLanguage === "ko" ? "en" : "ko");
+    const newLanguage = currentLanguage === "ko" ? "en" : "ko";
+
+    i18n.changeLanguage(newLanguage);
+    setLang(newLanguage);
   };
 
   return (
