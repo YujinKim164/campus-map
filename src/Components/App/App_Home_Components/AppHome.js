@@ -52,12 +52,9 @@ const AppHome = () => {
         <Div>
           <MarkerLogo src={require("../../../Assets/img/Logo.jpg")} />
           <Button onClick={() => navigate("/map")}>길찾기</Button>
-          <Button>층별 시설</Button>
+          <Button onClick={() => navigate("/floor")}>층별 시설</Button>
           <Button>주요 시설 정보</Button>
-          <Button>설정</Button>
-          {/* <div>
-            <Link to="/map">HGU 캠퍼스 맵</Link>
-          </div> */}
+          <Button onClick={() => navigate("/setting")}>설정</Button>
         </Div>
       )}
     </ThemeProvider>

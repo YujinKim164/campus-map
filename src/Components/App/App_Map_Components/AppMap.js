@@ -5,6 +5,8 @@ import styled, { ThemeProvider } from "styled-components";
 import AppSplash from "../App_Splash_Components/AppSplash";
 import { theme } from "../../../Style/theme";
 import axios from "axios";
+import FindRoute from "../../../Assets/img/FindRoute.png";
+import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
 
 const AppMap = () => {
   const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
@@ -149,7 +151,6 @@ const AppMap = () => {
       alert("검색 중 오류가 발생했습니다.");
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       {loading ? (
@@ -167,6 +168,19 @@ const AppMap = () => {
           //onInitialized={(map) => setNaverMap(map)}
           onClick={handleMapClick}
         >
+          <SearchContainer isVisible={isContainersVisible}>
+            <InputGroup>
+              <SearchInput
+                type="text"
+                placeholder="건물명 또는 건물번호 입력"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+              <MenuButton />
+            </InputGroup>
+            <FindRouteButton />
+          </SearchContainer>
+
           {currentPosition && (
             <NaverMap
               draggable
@@ -241,4 +255,55 @@ const SliderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+const InputGroup = styled.div`
+  position: relative;
+`;
+const SearchContainer = styled.div`
+  display: ${(props) => (props.isVisible ? "flex" : "none")};
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  padding: 40px 13px 12px 13px;
+  z-index: 1000;
+`;
+
+const SearchInput = styled.input`
+  flex-grow: 1;
+  border-color: #0094ff;
+  border-radius: 8px;
+  padding: 16px 67px 15px 47px;
+  //text-indent: 28px;
+
+  &::placeholder {
+    font-size: ${(props) => props.theme.Web_fontSizes.Body5};
+    font-weight: ${(props) => props.theme.fontWeights.Body5};
+    line-height: ${(props) => props.theme.LineHeight.Body5};
+    color: ${(props) => props.theme.colors.black_50};
+    font-family: "Pretendard";
+  }
+  &:focus {
+    background-image: none;
+    background-position: -10px center;
+    text-indent: 0;
+  }
+`;
+const FindRouteButton = styled.button`
+  width: 48px;
+  height: 48px;
+  background: none;
+  background-image: url(${FindRoute});
+  background-size: cover;
+  border: none;
+  padding: 0;
+  margin-left: 8px;
+`;
+const MenuButton = styled.button`
+  position: absolute;
+  width: 24px;
+  left: 13px;
+  border: none;
+  background-image: url(${NavigationDrawer});
 `;
