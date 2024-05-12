@@ -6,7 +6,7 @@ import SettingPage from "./Page/SettingPage";
 import ScrollToTop from "./ScrollToTop";
 import { ThemeProvider } from "./Contexts/ThemeContext.js";
 import { theme } from "./Style/theme";
-import "./i18n";
+import "./locales/i18n";
 
 function App() {
   return (

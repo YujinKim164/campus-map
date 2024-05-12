@@ -4,6 +4,9 @@ import { theme } from "../../../Style/theme";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+// i18n을 import
+import i18n from "../../../locales/i18n";
+
 // theme 파일 폰트 적용 방법 + style-components 사용
 const Header1 = styled.div`
   font-size: ${(props) => props.theme.Web_fontSizes.Header1};
@@ -12,28 +15,24 @@ const Header1 = styled.div`
   color: ${(props) => props.theme.colors.secondary};
   font-family: "Pretendard";
 `;
-// 설정 버튼 컴포넌트화
 
 const AppSetting = () => {
-  const { i18n } = useTranslation();
-  const [lang, setLang] = React.useState(i18n.language);
+  const { t } = useTranslation();
 
-  const toggleLanguage = () => {
-    const currentLanguage = i18n.language;
-    const newLanguage = currentLanguage === "ko" ? "en" : "ko";
-
-    i18n.changeLanguage(newLanguage);
-    setLang(newLanguage);
+  // 언어 변경 함수
+  const clickHandler = (lang) => {
+    i18n.changeLanguage(lang);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <TopAppBar>
-        <TopAppBarTxt>설정</TopAppBarTxt>
+        <TopAppBarTxt>{t("Settings")}</TopAppBarTxt>
       </TopAppBar>
-      <Header1>설정 페이지입니다.</Header1>
-      <button onClick={toggleLanguage}>설정</button>
-      <Link to="/">홈 페이지</Link>
+      <button onClick={() => clickHandler("ko")}>KO</button>
+      <button onClick={() => clickHandler("en")}>EN</button>
+
+      <Link to="/">{t("homePage")}</Link>
     </ThemeProvider>
   );
 };
@@ -45,8 +44,10 @@ const TopAppBar = styled.div`
   align-items: center;
   background-color: #0094ff;
 `;
+
 const TopAppBarTxt = styled.div`
   font-size: 20px;
   color: #ffffff;
 `;
+
 export default AppSetting;

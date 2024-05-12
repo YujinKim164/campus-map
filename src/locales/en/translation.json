@@ -1,0 +1,41 @@
+{
+  "map": {
+    "map-search": "Search buildings or places",
+    "food": "Food",
+    "cafe": "Cafe",
+    "cvs": "CVS",
+    "sports": "Sports",
+    "dep": "Dep.",
+    "arr": "Arr."
+  },
+  "nav": {
+    "map": "Map",
+    "directions": "Directions",
+    "Facilities": "Facilities",
+    "settings": "Settings"
+  },
+  "top-bar": {
+    "facilities": "Buildings",
+    "facility_detail": "Facility Information",
+    "settings": "Settings",
+    "feedback": "Feedback & Report"
+  },
+  "building": {
+    "student": "Student Union Bldg.",
+    "welfare": "Welfare Center",
+    "HDH": "Hyeongdong Hall(HDH)",
+    "OH": "Oseok Bldg.(OH)",
+    "NTH": "Newton Hall(NTH)",
+    "NMH": "Nehemiah Hall(NMH)",
+    "ANH": "All Nations Hall(ANH)"
+  },
+  "setting": {
+    "size": "Text size",
+    "language": "Language",
+    "feedback": "Feedback & Report",
+    "version": "Version",
+    "map-version": "Naver Map SDK version"
+  },
+  "navigate": "Find route",
+  "homePage": "Homepage"
+}
