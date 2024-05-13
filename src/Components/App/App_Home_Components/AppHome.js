@@ -51,8 +51,7 @@ const AppHome = () => {
       ) : (
         <Div>
           <MarkerLogo src={require("../../../Assets/img/Logo.jpg")} />
-          <Button onClick={() => navigate("/map")}>길찾기</Button>
-          <Button onClick={() => navigate("/floor")}>층별 시설</Button>
+          <Button onClick={() => navigate("/")}>길찾기</Button>
           <Button>주요 시설 정보</Button>
           <Button onClick={() => navigate("/setting")}>설정</Button>
         </Div>

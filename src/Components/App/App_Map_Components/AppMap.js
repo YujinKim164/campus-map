@@ -7,6 +7,8 @@ import { theme } from "../../../Style/theme";
 import axios from "axios";
 import FindRoute from "../../../Assets/img/FindRoute.png";
 import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
+import { useTranslation } from "react-i18next";
+import i18n from "./../../../locales/i18n";
 
 const AppMap = () => {
   const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
@@ -28,7 +30,7 @@ const AppMap = () => {
   const [sliderHeight, setSliderHeight] = useState("167px");
   const [isContainersVisible, setIsContainersVisible] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
-
+  const { t } = useTranslation();
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
@@ -177,7 +179,7 @@ const AppMap = () => {
             <InputGroup>
               <SearchInput
                 type="text"
-                placeholder="건물명 또는 건물번호 입력"
+                placeholder={t("mapSearch")}
                 value={searchQuery}
                 onChange={handleSearchChange}
                 disabled={isNavOpen}
@@ -187,6 +189,14 @@ const AppMap = () => {
             <FindRouteButton />
             {isNavOpen && <Navigation />}
           </SearchContainer>
+          <ChipContainer visible={isContainersVisible}>
+            <ChipWrapper>
+              <Chip>🍴{t("food")}</Chip>
+              <Chip>☕{t("cafe")}</Chip>
+              <Chip>🍱{t("cvs")}</Chip>
+              <Chip>⚽{t("sports")}</Chip>
+            </ChipWrapper>
+          </ChipContainer>
           {currentPosition && (
             <NaverMap
               draggable
@@ -282,13 +292,14 @@ const SearchContainer = styled.div.withConfig({
 const SearchInput = styled.input`
   flex-grow: 1;
   border-color: #0094ff;
+  border-width: 2px;
   border-radius: 8px;
   padding: 16px 67px 15px 47px;
-  font-size: ${(props) => props.theme.Web_fontSizes.Body5};
+  font-size: ${(props) => props.theme.fontSizes.Body5};
 
   &::placeholder {
-    font-size: ${(props) => props.theme.Web_fontSizes.Body5};
-    font-weight: 600;
+    font-size: ${(props) => props.theme.fontSizes.Body5};
+    font-weight: 500;
     line-height: ${(props) => props.theme.LineHeight.Body5};
     color: #d9d9d9;
   }
@@ -318,23 +329,53 @@ const MenuButton = styled.button`
   background-image: url(${NavigationDrawer});
   background-size: cover;
 `;
+const ChipContainer = styled.div`
+  display: ${(props) => (props.visible ? "flex" : "none")};
+  position: absolute;
+  top: 102px;
+  margin-left: 13px;
+  margin-right: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 1000;
+`;
+const ChipWrapper = styled.div`
+  display: flex;
+  margin-bottom: 5px;
+  gap: 10px;
+`;
+const Chip = styled.div`
+  height: auto;
+  width: auto;
+  border-radius: 50px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  padding-left: 14px;
+  /* padding-right: 14px; */
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 2px 3px 5px rgb(0, 0, 0, 0.6); // height: auto 해제
+  color: ${(props) => props.theme.colors.black_90};
+  background-color: ${(props) => props.theme.colors.White};
+`;
+// Navigation Drawer 구현
 const Navigation = () => {
   const handleNavClick = (e) => {
     e.stopPropagation();
   };
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   return (
     <NavigationDrawerWrapper onClick={handleNavClick}>
-      <NavigationDrawerContent>📍 길찾기</NavigationDrawerContent>
-      <NavigationDrawerContent onClick={() => navigate("/map")}>
-        🧭 내비게이션
+      <NavigationDrawerContent>📍 {t("map")}</NavigationDrawerContent>
+      <NavigationDrawerContent onClick={() => navigate("/")}>
+        🧭 {t("directions")}
       </NavigationDrawerContent>
-      <NavigationDrawerContent onClick={() => navigate("/floor")}>
-        🏢 시설정보
+      <NavigationDrawerContent onClick={() => navigate("/building")}>
+        🏢 {t("Facilities")}
       </NavigationDrawerContent>
       <NavigationDrawerContent onClick={() => navigate("/setting")}>
-        ⚙️ 설정
+        ⚙️ {t("settings")}
       </NavigationDrawerContent>
     </NavigationDrawerWrapper>
   );
@@ -354,7 +395,8 @@ const NavigationDrawerWrapper = styled.div`
 
 const NavigationDrawerContent = styled.div`
   padding: 30px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 const BackgroundBlur = styled.div`

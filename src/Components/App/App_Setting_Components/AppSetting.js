@@ -13,7 +13,13 @@ import i18n from "../../../locales/i18n";
 //   color: ${(props) => props.theme.colors.secondary};
 //   font-family: "Pretendard";
 // `;
-
+const Body3 = styled.div`
+  font-size: ${(props) => props.theme.Web_fontSizes.Header1};
+  font-weight: ${(props) => props.theme.fontWeights.Header1};
+  line-height: ${(props) => props.theme.LineHeight.Header1};
+  color: ${(props) => props.theme.colors.secondary};
+  font-family: "Pretendard";
+`;
 const AppSetting = () => {
   const { t } = useTranslation();
 
@@ -34,8 +40,13 @@ const AppSetting = () => {
         <button onClick={() => clickHandler("en")}>EN</button>
       </MenuDiv>
       <MenuDiv>{t("feedback")}</MenuDiv>
-      <MenuDiv>{t("version")}</MenuDiv>
-      <MenuDiv>{t("mapVersion")}</MenuDiv>
+      <MenuDiv>
+        {t("version")}
+        <MenuDetail>1.0.0</MenuDetail>
+      </MenuDiv>
+      <MenuDiv>
+        {t("mapVersion")} <MenuDetail>3.17.0</MenuDetail>
+      </MenuDiv>
 
       <Link to="/">{t("homePage")}</Link>
     </ThemeProvider>
@@ -56,10 +67,22 @@ const TopAppBarTxt = styled.div`
 `;
 
 const MenuDiv = styled.div`
-  padding: 26px 17px 26px 22px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 26px;
+  padding-bottom: 26px;
+  padding-left: 22px;
   font-size: 18px;
   font-weight: 500;
-  color: "#1F1F1F";
+  color: #1f1f1f;
+  border-bottom: 1px solid #dadada;
+`;
+const MenuDetail = styled.div`
+  margin-right: 17px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1f1f1f;
 `;
 
 export default AppSetting;

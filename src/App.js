@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./Page/HomePage";
 import MapPage from "./Page/MapPage";
-import FloorPage from "./Page/FloorPage";
+import BuildingPage from "./Page/BuildingPage";
 import SettingPage from "./Page/SettingPage";
 import ScrollToTop from "./ScrollToTop";
 import { ThemeProvider } from "./Contexts/ThemeContext.js";
@@ -15,9 +15,9 @@ function App() {
         <ScrollToTop />
         <Routes>
           {/* 기본 화면 설정 */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/map" element={<MapPage />} />
-          <Route path="/floor" element={<FloorPage />} />
+          {/* <Route path="/" element={<HomePage />} /> */}
+          <Route path="/" element={<MapPage />} />
+          <Route path="/building" element={<BuildingPage />} />
           <Route path="/setting" element={<SettingPage />} />
         </Routes>
       </Router>
