@@ -1,0 +1,46 @@
+{
+  "mapSearch": "Search buildings or places",
+  "food": "Food",
+  "cafe": "Cafe",
+  "cvs": "CVS",
+  "sports": "Sports",
+  "dep": "Dep.",
+  "arr": "Arr.",
+
+  "map": "Map",
+  "directions": "Directions",
+  "Facilities": "Facilities",
+
+  "facilities": "Buildings",
+  "facilityDetail": "Facility Information",
+  "settings": "Settings",
+  "feedback": "Feedback & Report",
+
+  "student": "Student Union Bldg.",
+  "welfare": "Welfare Center",
+  "HDH": "Hyeongdong Hall(HDH)",
+  "OH": "Oseok Bldg.(OH)",
+  "NTH": "Newton Hall(NTH)",
+  "NMH": "Nehemiah Hall(NMH)",
+  "ANH": "All Nations Hall(ANH)",
+  "CSH": "Cornerstone Hall(CSH)",
+  "KGH": "KimYoungGil Grace School(KGH)",
+  "EBEN": "Ebenezer Bldg.(EBEN)",
+  "GLC": "Global Language Center(GLC)",
+  "HCA": "Hyoam Chapel(HCA)",
+
+  "size": "Text size",
+  "language": "Language",
+  "version": "Version",
+  "mapVersion": "Naver Map SDK version",
+
+  "laguageModal": "To apply the language, the app will close. Please restart HGU Map.",
+  "reportModal": "Your feedback has been succesfully submitted. Thank you.",
+
+  "navigate": "Find route",
+  "name": "Name",
+  "timeOperation": "Time of Operation",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "homePage": "Homepage"
+}

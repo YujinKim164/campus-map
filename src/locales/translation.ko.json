@@ -1,0 +1,46 @@
+{
+  "mapSearch": "건물명 또는 건물번호 입력",
+  "food": "식당",
+  "cafe": "카페",
+  "cvs": "편의점",
+  "sports": "운동",
+  "dep": "출발",
+  "arr": "도착",
+
+  "map": "길찾기",
+  "directions": "내비게이션",
+  "Facilities": "시설 정보",
+
+  "facilities": "내부 시설",
+  "facilityDetail": "건물 상세 정보",
+  "settings": "설정",
+  "feedback": "정보 수정 제안",
+
+  "student": "학생회관",
+  "welfare": "복지동",
+  "HDH": "현동홀(HDH)",
+  "OH": "오석관(OH)",
+  "NTH": "뉴턴홀(NTH)",
+  "NMH": "느헤미야홀(NMH)",
+  "ANH": "올네이션스홀(ANH)",
+  "CSH": "코너스턴홀(CSH)",
+  "KGH": "김영길 그레이스스쿨(KGH)",
+  "EBEN": "에벤에셀관(EBEN)",
+  "GLC": "언어교육원(GLC)",
+  "HCA": "효암채플(HCA)",
+
+  "size": "글자 크기",
+  "language": "언어",
+  "version": "버전",
+  "mapVersion": "네이버 맵 SDK 버전",
+
+  "laguageModal": "언어 설정을 위해 앱을 종료합니다. HGU 맵을 다시 실행해주세요.",
+  "reportModal": "성공적으로 접수되었습니다. 감사합니다.",
+
+  "navigate": "길찾기",
+  "name": "이름",
+  "timeOperation": "운영 시간",
+  "cancel": "취소",
+  "ok": "확인",
+  "homePage": "홈페이지"
+}
