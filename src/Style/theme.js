@@ -31,6 +31,9 @@ export const GlobalStyle = createGlobalStyle`
   font-style: normal;
   src: local('"Inter", sans-serif'), url("./Inter-Bold.ttf") format("truetype");
 }
+body {
+  font-family: "Inter";
+}
 `;
 
 export const theme = {

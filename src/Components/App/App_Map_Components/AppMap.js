@@ -196,6 +196,7 @@ const AppMap = () => {
               <Chip>🍱{t("cvs")}</Chip>
               <Chip>⚽{t("sports")}</Chip>
             </ChipWrapper>
+            {isNavOpen && <Navigation />}
           </ChipContainer>
           {currentPosition && (
             <NaverMap
@@ -334,7 +335,6 @@ const ChipContainer = styled.div`
   position: absolute;
   top: 102px;
   margin-left: 13px;
-  margin-right: 12px;
   overflow-x: auto;
   overflow-y: hidden;
   z-index: 1000;
@@ -345,16 +345,15 @@ const ChipWrapper = styled.div`
   gap: 10px;
 `;
 const Chip = styled.div`
-  height: auto;
-  width: auto;
-  border-radius: 50px;
-  padding-top: 11px;
-  padding-bottom: 11px;
-  padding-left: 14px;
-  /* padding-right: 14px; */
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0px 11px 0px 11px;
   font-size: 16px;
   font-weight: 500;
-  box-shadow: 2px 3px 5px rgb(0, 0, 0, 0.6); // height: auto 해제
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px;
+  font-family: "Inter", sans-serif;
   color: ${(props) => props.theme.colors.black_90};
   background-color: ${(props) => props.theme.colors.White};
 `;
