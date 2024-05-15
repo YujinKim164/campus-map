@@ -292,7 +292,7 @@ const SearchContainer = styled.div.withConfig({
 
 const SearchInput = styled.input`
   flex-grow: 1;
-  border-color: #0094ff;
+  border-color: ${(props) => props.theme.colors.Primary_blue};
   border-width: 2px;
   border-radius: 8px;
   padding: 16px 67px 15px 47px;
@@ -302,7 +302,7 @@ const SearchInput = styled.input`
     font-size: ${(props) => props.theme.fontSizes.Body5};
     font-weight: 500;
     line-height: ${(props) => props.theme.LineHeight.Body5};
-    color: #d9d9d9;
+    color: ${(props) => props.theme.colors.Gray};
   }
   &:focus {
     background-image: none;
@@ -341,8 +341,9 @@ const ChipContainer = styled.div`
 `;
 const ChipWrapper = styled.div`
   display: flex;
+  white-space: nowrap;
   margin-bottom: 5px;
-  gap: 10px;
+  gap: 8px; // 10px -> 8px
 `;
 const Chip = styled.div`
   display: flex;

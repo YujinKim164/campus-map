@@ -38,8 +38,7 @@ body {
 
 export const theme = {
   colors: {
-    Primary_blue100: "#0094FF",
-    Red: "EA4335",
+    Primary_blue: "#0094FF",
     pink_25: "#EA4335",
     White: "#FFFFFF",
     Gray: "#D9D9D9", // placeholder

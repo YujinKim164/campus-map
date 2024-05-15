@@ -58,7 +58,7 @@ const TopAppBar = styled.div`
   height: 60px;
   justify-content: center;
   align-items: center;
-  background-color: #0094ff;
+  background-color: ${(props) => props.theme.colors.Primary_blue};
 `;
 
 const TopAppBarTxt = styled.div`
@@ -75,14 +75,14 @@ const MenuDiv = styled.div`
   padding-left: 22px;
   font-size: 18px;
   font-weight: 500;
-  color: #1f1f1f;
+  color: ${(props) => props.theme.colors.black_90};
   border-bottom: 1px solid #dadada;
 `;
 const MenuDetail = styled.div`
   margin-right: 17px;
   font-size: 18px;
   font-weight: 500;
-  color: #1f1f1f;
+  color: ${(props) => props.theme.colors.black_90};
 `;
 
 export default AppSetting;
