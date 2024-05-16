@@ -1,11 +1,13 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 
 const AppBuilding = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   return (
@@ -13,8 +15,10 @@ const AppBuilding = () => {
       <TopAppBar>
         <TopAppBarTxt>{t("facilities")}</TopAppBarTxt>
       </TopAppBar>
-      <MenuDiv>{t("student")}</MenuDiv>
-      <MenuDiv>{t("welfare")}</MenuDiv>
+      <MenuDiv onClick={() => navigate("/building/student")}>
+        {t("student")}
+      </MenuDiv>
+      <MenuDiv>{t("happiness")}</MenuDiv>
       <MenuDiv>{t("HDH")}</MenuDiv>
       <MenuDiv>{t("OH")}</MenuDiv>
       <MenuDiv>{t("NTH")}</MenuDiv>
@@ -53,7 +57,7 @@ const MenuDiv = styled.div`
   padding-top: 25px;
   padding-bottom: 25px;
   padding-left: 15px;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 500;
   color: ${(props) => props.theme.colors.black_90};
   border-bottom: 1px solid #dadada;

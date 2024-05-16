@@ -41,7 +41,9 @@ export const theme = {
     Primary_blue: "#0094FF",
     pink_25: "#EA4335",
     White: "#FFFFFF",
-    Gray: "#D9D9D9", // placeholder
+    gray_100: "#D9D9D9", // placeholder
+    gray_20: "#C1C0C9", // copyright
+    gray_50: "#DADADA", // menu divider
     black_90: "#1F1F1F",
     black_100: "#000000",
   },

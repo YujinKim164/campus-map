@@ -7,6 +7,8 @@ import ScrollToTop from "./ScrollToTop";
 import { ThemeProvider } from "./Contexts/ThemeContext.js";
 import { theme } from "./Style/theme";
 import "./locales/i18n";
+import AppBuildingStudent from "./Components/App/App_Building_Components/AppBuildingStudent";
+import AppSettingReport from "./Components/App/App_Setting_Components/AppSettingReport";
 
 function App() {
   return (
@@ -18,8 +20,9 @@ function App() {
           {/* <Route path="/" element={<HomePage />} /> */}
           <Route path="/" element={<MapPage />} />
           <Route path="/building" element={<BuildingPage />} />
-          {/* <Route path="/building/student" element={<StudentPage>} /> */}
+          <Route path="/building/student" element={<AppBuildingStudent />} />
           <Route path="/setting" element={<SettingPage />} />
+          <Route path="/setting/report" element={<AppSettingReport />} />
         </Routes>
       </Router>
     </ThemeProvider>

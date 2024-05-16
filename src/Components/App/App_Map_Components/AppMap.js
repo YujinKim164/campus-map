@@ -302,7 +302,7 @@ const SearchInput = styled.input`
     font-size: ${(props) => props.theme.fontSizes.Body5};
     font-weight: 500;
     line-height: ${(props) => props.theme.LineHeight.Body5};
-    color: ${(props) => props.theme.colors.Gray};
+    color: ${(props) => props.theme.colors.gray_100};
   }
   &:focus {
     background-image: none;

@@ -5,21 +5,6 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 
-// theme 파일 폰트 적용 방법 + style-components 사용
-// const Header1 = styled.div`
-//   font-size: ${(props) => props.theme.Web_fontSizes.Header1};
-//   font-weight: ${(props) => props.theme.fontWeights.Header1};
-//   line-height: ${(props) => props.theme.LineHeight.Header1};
-//   color: ${(props) => props.theme.colors.secondary};
-//   font-family: "Pretendard";
-// `;
-const Body3 = styled.div`
-  font-size: ${(props) => props.theme.Web_fontSizes.Header1};
-  font-weight: ${(props) => props.theme.fontWeights.Header1};
-  line-height: ${(props) => props.theme.LineHeight.Header1};
-  color: ${(props) => props.theme.colors.secondary};
-  font-family: "Pretendard";
-`;
 const AppSetting = () => {
   const { t } = useTranslation();
 
@@ -30,28 +15,50 @@ const AppSetting = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <TopAppBar>
-        <TopAppBarTxt>{t("settings")}</TopAppBarTxt>
-      </TopAppBar>
-      <MenuDiv>{t("size")}</MenuDiv>
-      <MenuDiv>
-        {t("language")}
-        <button onClick={() => clickHandler("ko")}>KO</button>
-        <button onClick={() => clickHandler("en")}>EN</button>
-      </MenuDiv>
-      <MenuDiv>{t("feedback")}</MenuDiv>
-      <MenuDiv>
-        {t("version")}
-        <MenuDetail>1.0.0</MenuDetail>
-      </MenuDiv>
-      <MenuDiv>
-        {t("mapVersion")} <MenuDetail>3.17.0</MenuDetail>
-      </MenuDiv>
-
-      <Link to="/">{t("homePage")}</Link>
+      <Container>
+        <Content>
+          <TopAppBar>
+            <TopAppBarTxt>{t("settings")}</TopAppBarTxt>
+          </TopAppBar>
+          <MenuDiv>{t("size")}</MenuDiv>
+          <MenuDiv>
+            {t("language")}
+            <button onClick={() => clickHandler("ko")}>KO</button>
+            <button onClick={() => clickHandler("en")}>EN</button>
+          </MenuDiv>
+          <MenuDiv>{t("feedback")}</MenuDiv>
+          <MenuDiv>
+            {t("version")}
+            <MenuDetail>1.0.0</MenuDetail>
+          </MenuDiv>
+          <MenuDiv>
+            {t("mapVersion")} <MenuDetail>3.17.0</MenuDetail>
+          </MenuDiv>
+        </Content>
+        <Bottom>
+          <Copyright>© SE8. All Rights Reserved</Copyright>
+          <Link to="/">{t("homePage")}</Link>
+        </Bottom>
+      </Container>
     </ThemeProvider>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+`;
+
+const Content = styled.div`
+  flex: 1;
+`;
+
+const Bottom = styled.div`
+  text-align: center;
+  margin-bottom: 20px;
+`;
 
 const TopAppBar = styled.div`
   display: flex;
@@ -63,7 +70,7 @@ const TopAppBar = styled.div`
 
 const TopAppBarTxt = styled.div`
   font-size: 20px;
-  color: #ffffff;
+  color: ${(props) => props.theme.colors.White};
 `;
 
 const MenuDiv = styled.div`
@@ -83,6 +90,12 @@ const MenuDetail = styled.div`
   font-size: 18px;
   font-weight: 500;
   color: ${(props) => props.theme.colors.black_90};
+`;
+
+const Copyright = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.gray_20};
 `;
 
 export default AppSetting;
