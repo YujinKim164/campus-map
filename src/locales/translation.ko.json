@@ -14,9 +14,9 @@
   "facilities": "내부 시설",
   "facilityDetail": "건물 상세 정보",
   "settings": "설정",
-  "feedback": "정보 수정 제안",
-
-  "register new place": "신규 장소 등록",
+  "feedback": "정보 등록 및 수정",
+  "register": "신규 장소 등록",
+  "edit": "정보 수정 제안",
 
   "student": "학생회관",
   "happiness": "복지동",
