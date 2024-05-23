@@ -33,6 +33,8 @@
 
   "size": "글자 크기",
   "language": "언어",
+  "ko": "한국어",
+  "en": "영어",
   "version": "버전",
   "mapVersion": "네이버 맵 SDK 버전",
 
