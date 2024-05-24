@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 import Modal from "react-modal";
-
+Modal.setAppElement("#root");
 const AppSetting = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -74,7 +74,7 @@ const AppSetting = () => {
               {t("en")}
             </ModalButton>
             <ModalCloseButton onClick={closeModal}>
-              {t("close")}
+              {t("cancel")}
             </ModalCloseButton>
           </ModalContent>
         </Modal>
@@ -91,10 +91,10 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    width: "300px",
-    padding: "20px",
-    borderRadius: "8px",
+    width: "293px",
+    borderRadius: "10px",
     textAlign: "center",
+    padding: "0",
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -165,41 +165,33 @@ const Copyright = styled.div`
 const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: left;
+  text-align: left;
 `;
 
-const ModalTitle = styled.h2`
-  margin-bottom: 20px;
+const ModalTitle = styled.div`
   font-size: 20px;
+  font-weight: 600;
+  padding: 30px 0 22px 30px;
   color: ${(props) => props.theme.colors.black_90};
 `;
 
-const ModalButton = styled.button`
-  margin: 10px 0;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: ${(props) => props.theme.colors.Primary_blue};
-  color: ${(props) => props.theme.colors.White};
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.Primary_blue_hover};
-  }
+const ModalButton = styled.div`
+  display: flex;
+  text-align: left;
+  padding: 15px 0 15px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid #dadada;
+  color: ${(props) => props.theme.colors.Primary_blue};
 `;
 
-const ModalCloseButton = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
+const ModalCloseButton = styled.div`
+  text-align: right;
+  margin-top: 79px;
+  padding: 0 30px 20px 0;
   font-size: 16px;
-  background-color: ${(props) => props.theme.colors.gray_20};
-  color: ${(props) => props.theme.colors.black_90};
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.gray_30};
-  }
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.gray_70};
 `;
 
 export default AppSetting;
