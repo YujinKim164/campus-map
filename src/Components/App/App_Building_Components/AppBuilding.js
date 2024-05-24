@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
+import CaretLeft from "../../../Assets/img/CaretLeft.png";
 
 const AppBuilding = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const AppBuilding = () => {
   return (
     <ThemeProvider theme={theme}>
       <TopAppBar>
+        <Vector onClick={() => navigate("/")} />
         <TopAppBarTxt>{t("facilities")}</TopAppBarTxt>
       </TopAppBar>
       <MenuDiv onClick={() => navigate("/building/student")}>
@@ -40,7 +42,6 @@ export default AppBuilding;
 const TopAppBar = styled.div`
   display: flex;
   height: 60px;
-  justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.colors.Primary_blue};
 `;
@@ -48,6 +49,11 @@ const TopAppBar = styled.div`
 const TopAppBarTxt = styled.div`
   font-size: 20px;
   color: ${(props) => props.theme.colors.White};
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
 `;
 
 const MenuDiv = styled.div`
@@ -61,4 +67,11 @@ const MenuDiv = styled.div`
   font-weight: 500;
   color: ${(props) => props.theme.colors.black_90};
   border-bottom: 1px solid #dadada;
+`;
+const Vector = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-left: 11px;
+  background-image: url(${CaretLeft});
+  background-size: cover;
 `;

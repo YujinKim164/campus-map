@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
+import CaretLeft from "../../../Assets/img/CaretLeft.png";
 
 const AppBuildingStudent = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [foodClicked, setFoodClicked] = useState(false);
   const [cafeClicked, setCafeClicked] = useState(false);
   const handleFoodClick = () => {
@@ -18,9 +21,11 @@ const AppBuildingStudent = () => {
     setCafeClicked(true);
     setFoodClicked(false);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <TopAppBar>
+        <Vector onClick={() => navigate("/building")} />
         <TopAppBarTxt>{t("facilityDetail")}</TopAppBarTxt>
       </TopAppBar>
       <Div>
@@ -46,17 +51,28 @@ const Div = styled.div`
   padding-right: 23px;
   padding-top: 36px;
 `;
+
 const TopAppBar = styled.div`
   display: flex;
   height: 60px;
-  justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.colors.Primary_blue};
 `;
-
+const Vector = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-left: 11px;
+  background-image: url(${CaretLeft});
+  background-size: cover;
+`;
 const TopAppBarTxt = styled.div`
-  font-size: 20px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
   color: ${(props) => props.theme.colors.White};
+  font-size: 20px;
 `;
 
 const BuildingTxt = styled.div`

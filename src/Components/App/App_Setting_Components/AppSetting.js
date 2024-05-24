@@ -6,7 +6,11 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 import Modal from "react-modal";
+import CaretRight from "../../../Assets/img/CaretRight.png";
+import CaretLeft from "../../../Assets/img/CaretLeft.png";
+
 Modal.setAppElement("#root");
+
 const AppSetting = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -34,13 +38,16 @@ const AppSetting = () => {
       <Container>
         <Content>
           <TopAppBar>
+            <LeftVector onClick={() => navigate("/")} />
             <TopAppBarTxt>{t("settings")}</TopAppBarTxt>
           </TopAppBar>
           <MenuDiv>{t("size")}</MenuDiv>
           <MenuDiv onClick={openModal}>
             {t("language")}
-            {/* <MenuDetail>{currentLanguage.toUpperCase()}</MenuDetail> */}
-            <LanguageDetail>{t("ko")}</LanguageDetail>
+            <LanguageDetail>
+              {t("ko")}
+              <Vector />
+            </LanguageDetail>
           </MenuDiv>
           <MenuDiv onClick={() => navigate("/setting/report")}>
             {t("feedback")}
@@ -120,14 +127,26 @@ const Bottom = styled.div`
 const TopAppBar = styled.div`
   display: flex;
   height: 60px;
-  justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.colors.Primary_blue};
+`;
+
+const LeftVector = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-left: 11px;
+  background-image: url(${CaretLeft});
+  background-size: cover;
 `;
 
 const TopAppBarTxt = styled.div`
   font-size: 20px;
   color: ${(props) => props.theme.colors.White};
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
 `;
 
 const MenuDiv = styled.div`
@@ -150,12 +169,23 @@ const MenuDetail = styled.div`
   font-weight: 500;
   color: ${(props) => props.theme.colors.black_90};
 `;
+
 const LanguageDetail = styled.div`
-  margin-right: 17px;
+  display: flex;
+  align-items: center;
+  margin-right: 13px;
   font-size: 16px;
   font-weight: 600;
   color: ${(props) => props.theme.colors.Primary_blue};
 `;
+
+const Vector = styled.div`
+  width: 24px;
+  height: 24px;
+  background-image: url(${CaretRight});
+  background-size: cover;
+`;
+
 const Copyright = styled.div`
   font-size: 14px;
   font-weight: 500;
