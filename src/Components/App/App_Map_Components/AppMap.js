@@ -9,6 +9,7 @@ import FindRoute from "../../../Assets/img/FindRoute.png";
 import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
 import { useTranslation } from "react-i18next";
 import i18n from "./../../../locales/i18n";
+import Modal from "react-modal";
 
 const AppMap = () => {
   const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
@@ -30,6 +31,8 @@ const AppMap = () => {
   const [sliderHeight, setSliderHeight] = useState("167px");
   const [isContainersVisible, setIsContainersVisible] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { t } = useTranslation();
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -72,6 +75,13 @@ const AppMap = () => {
   const handleMapClick = () => {
     setSliderVisible(false);
     setIsSliderVisible(false);
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
   // 현재 위치 받아오기
   const handleCurrentLocation = useCallback(() => {
