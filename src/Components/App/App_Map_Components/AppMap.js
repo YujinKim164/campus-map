@@ -72,10 +72,12 @@ const AppMap = () => {
   const handleSliderDragEnd = () => {
     setSliderPosition("bottom");
   };
-  const handleMapClick = () => {
+
+  const handleMapClick = (e) => {
     setSliderVisible(false);
     setIsSliderVisible(false);
   };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -83,6 +85,7 @@ const AppMap = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   // 현재 위치 받아오기
   const handleCurrentLocation = useCallback(() => {
     if (navigator.geolocation) {
@@ -92,11 +95,6 @@ const AppMap = () => {
             position.coords.latitude,
             position.coords.longitude
           );
-          // const positionData = {
-          //   key: 3745,
-          //   position: new navermaps.LatLng(37.5432527996, 127.0566145649),
-          //   title: "성수동 카페거리",
-          // };
           setCurrentPosition(newPosition);
           setNewPosition(newPosition);
           console.log("My current location: ", newPosition);
@@ -167,6 +165,7 @@ const AppMap = () => {
       alert("검색 중 오류가 발생했습니다.");
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       {loading ? (
@@ -181,7 +180,6 @@ const AppMap = () => {
             backgroundColor: "#fff",
             alignItems: "center",
           }}
-          //onInitialized={(map) => setNaverMap(map)}
           onClick={handleMapClick}
         >
           <BackgroundBlur isOpen={isNavOpen} onClick={toggleNav} />
@@ -218,6 +216,8 @@ const AppMap = () => {
               defaultCenter={currentPosition}
               defaultZoom={17}
               onZoomChanged={handleZoomChanged}
+              onClick={handleMapClick}
+              ref={setNaverMap}
             >
               <Marker position={currentPosition} />
             </NaverMap>
@@ -265,31 +265,54 @@ const Slider = ({
       left: 0,
       right: 0,
       height: sliderHeight,
-      backgroundColor: "white",
-      padding: "20px",
-      boxShadow: "0px -2px 10px rgba(0, 0, 0, 0.1)",
-      borderTopLeftRadius: "18px",
-      borderTopRightRadius: "18px",
+      backgroundColor: "#fff",
+      borderTopLeftRadius: "12px",
+      borderTopRightRadius: "12px",
+      boxShadow: "0px -1px 3px rgba(0,0,0,0.2)",
+      display: "flex",
+      flexDirection: "column",
+      zIndex: 1000,
     }}
     onMouseDown={handleSliderDragStart}
     onMouseUp={handleSliderDragEnd}
-    onMouseLeave={handleSliderDragEnd}
   >
-    {children}
+    <div
+      style={{
+        height: "36px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "pointer",
+      }}
+      onClick={handleSliderUpClick}
+    >
+      <div
+        style={{
+          width: "36px",
+          height: "4px",
+          backgroundColor: "#ccc",
+          borderRadius: "2px",
+        }}
+      />
+    </div>
+    <div
+      style={{
+        flex: 1,
+        overflowY: "auto",
+        padding: "16px",
+      }}
+    >
+      {children}
+    </div>
   </div>
 );
+
 const SliderContent = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 `;
-const InputGroup = styled.div`
-  position: relative;
-`;
-const SearchContainer = styled.div.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    !["isVisible"].includes(prop),
-})`
+
+const SearchContainer = styled.div`
   display: ${(props) => (props.isVisible ? "flex" : "none")};
   position: absolute;
   top: 0;
@@ -298,6 +321,14 @@ const SearchContainer = styled.div.withConfig({
   justify-content: center;
   padding: 40px 13px 12px 13px;
   z-index: 1000;
+`;
+
+const InputGroup = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 768px;
+  display: flex;
+  align-items: center;
 `;
 
 const SearchInput = styled.input`
