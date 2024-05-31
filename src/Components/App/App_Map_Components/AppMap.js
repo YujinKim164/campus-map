@@ -1,5 +1,7 @@
 import { Container as MapDiv, NaverMap, Marker } from "react-naver-maps";
 import { useNavigate } from "react-router-dom";
+import { fetchOpenPlaces } from "./../../../firebaseService";
+import { db } from "./../../../firebase";
 import React, { useState, useCallback, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import AppSplash from "../App_Splash_Components/AppSplash";
@@ -10,6 +12,7 @@ import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
 import { useTranslation } from "react-i18next";
 import i18n from "./../../../locales/i18n";
 import Modal from "react-modal";
+import placesData from "./../../../places.json";
 
 const AppMap = () => {
   const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
@@ -17,7 +20,10 @@ const AppMap = () => {
   const navermaps = window.naver.maps;
   const [naverMap, setNaverMap] = useState();
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [openPlaces, setOpenPlaces] = useState([]);
   const [markers, setMarkers] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const handleZoomChanged = useCallback((zoom) => {
     console.log(`zoom: ${zoom}`);
@@ -85,7 +91,15 @@ const AppMap = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  useEffect(() => {
+    const loadOpenPlaces = async () => {
+      const places = await fetchOpenPlaces();
+      setOpenPlaces(places);
+      setLoading(false);
+    };
 
+    loadOpenPlaces();
+  }, []);
   // 현재 위치 받아오기
   const handleCurrentLocation = useCallback(() => {
     if (navigator.geolocation) {
@@ -138,20 +152,22 @@ const AppMap = () => {
       return;
     }
     try {
-      const response = await axios.get("/v1/search/local.json", {
+      const response = await axios.get("http://localhost:3002/searchLocal", {
         params: {
           query: searchQuery,
           display: 5,
         },
-        headers: {
-          "X-Naver-Client-Id": NAVER_ID,
-          "X-Naver-Client-Secret": NAVER_API_KEY,
-        },
+        withCredentials: true, // CORS 문제 해결을 위해 credentials 모드 설정
       });
-      const { items } = response.data.response.body.items;
-      items.forEach((item) => {
-        console.log("Item Title:", item.title);
-      });
+      const items = response.data.items.map((item) => ({
+        title: item.title,
+        latitude: item.mapy,
+        longitude: item.mapx,
+      }));
+      console.log("Search Results:", items);
+
+      // 필터된 장소들을 상태에 저장하여 지도에 표시할 수 있도록 합니다.
+      setFilteredPlaces(items);
     } catch (error) {
       console.error("Error fetching data from Naver Search API", error);
       if (error.response) {
@@ -192,9 +208,9 @@ const AppMap = () => {
                 onChange={handleSearchChange}
                 disabled={isNavOpen}
               />
+              <FindRouteButton onClick={handleSearch} />
               <MenuButton onClick={toggleNav} />
             </InputGroup>
-            <FindRouteButton />
             {isNavOpen && <Navigation />}
           </SearchContainer>
           <ChipContainer visible={isContainersVisible}>
@@ -220,6 +236,23 @@ const AppMap = () => {
               ref={setNaverMap}
             >
               <Marker position={currentPosition} />
+              {openPlaces.map((place) => (
+                <Marker
+                  key={place.id}
+                  position={
+                    new navermaps.LatLng(place.latitude, place.longitude)
+                  }
+                  onClick={() => console.log(place)}
+                />
+              ))}
+              {/* 필터된 장소들을 지도에 표시 */}
+              {filteredPlaces.map((place) => (
+                <NaverMap.Marker
+                  key={place.name}
+                  position={{ lat: place.latitude, lng: place.longitude }}
+                  animation={2}
+                />
+              ))}
             </NaverMap>
           )}
           {sliderVisible && selectedMarkerInfo && (
@@ -450,3 +483,33 @@ const BackgroundBlur = styled.div`
   z-index: 10;
   display: ${(props) => (props.isOpen ? "block" : "none")};
 `;
+
+const isOpenNow = (operatingHours) => {
+  const [openTime, closeTime] = operatingHours.split(" - ");
+
+  const parseTime = (time) => {
+    const [hours, minutes, period] = time
+      .match(/(\d+):(\d+)\s*(AM|PM)/)
+      .slice(1);
+    let hour = parseInt(hours);
+    if (period === "PM" && hour !== 12) hour += 12;
+    if (period === "AM" && hour === 12) hour = 0;
+    return { hours: hour, minutes: parseInt(minutes) };
+  };
+
+  const open = parseTime(openTime);
+  const close = parseTime(closeTime);
+
+  const now = new Date();
+  const nowHours = now.getHours();
+  const nowMinutes = now.getMinutes();
+
+  const isAfterOpen =
+    nowHours > open.hours ||
+    (nowHours === open.hours && nowMinutes >= open.minutes);
+  const isBeforeClose =
+    nowHours < close.hours ||
+    (nowHours === close.hours && nowMinutes <= close.minutes);
+
+  return isAfterOpen && isBeforeClose;
+};
