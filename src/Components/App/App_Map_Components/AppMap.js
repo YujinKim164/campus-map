@@ -1,7 +1,7 @@
-import { Container as MapDiv, NaverMap, Marker } from "react-naver-maps";
+import { Container as MapDiv, NaverMap, Marker ,Polygon} from "react-naver-maps";
 import { useNavigate } from "react-router-dom";
 import { fetchOpenPlaces } from "./../../../firebaseService";
-import { db } from "./../../../firebase";
+import { db } from "./../../../Firebase";
 import React, { useState, useCallback, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import AppSplash from "../App_Splash_Components/AppSplash";
@@ -15,6 +15,8 @@ import Modal from "react-modal";
 import placesData from "./../../../places.json";
 
 const AppMap = () => {
+  const fill = '#ff0000';
+  const opacity = 0.3;
   const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
   const NAVER_ID = process.env.REACT_APP_NAVER_ID;
   const navermaps = window.naver.maps;
@@ -253,6 +255,170 @@ const AppMap = () => {
                   animation={2}
                 />
               ))}
+
+<Polygon id='HDH'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.103473,129.388947),
+          new navermaps.LatLng(36.104024,129.389165),
+          new navermaps.LatLng(36.104180,129.388815),
+          new navermaps.LatLng(36.104290,129.388476),
+          new navermaps.LatLng(36.104310,129.388113),
+          new navermaps.LatLng(36.104121,129.388035),
+          new navermaps.LatLng(36.103916,129.388844),
+          new navermaps.LatLng(36.103542,129.388708)
+        ]}
+      />
+
+<Polygon id='NMH'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.104242,129.387804),
+          new navermaps.LatLng(36.104245,129.387540),
+          new navermaps.LatLng(36.103859,129.387395),
+          new navermaps.LatLng(36.104072,129.386555),
+          new navermaps.LatLng(36.103880,129.386484),
+          new navermaps.LatLng(36.103605,129.387548)
+        ]}
+      />
+
+<Polygon id='PB'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.1028,129.3889),
+          new navermaps.LatLng(36.1039,129.3894),
+          new navermaps.LatLng(36.104,129.3897),
+          new navermaps.LatLng(36.1039,129.3901),
+          new navermaps.LatLng(36.1037,129.3902),
+          new navermaps.LatLng(36.1026,129.3899)
+        ]}
+      />
+
+<Polygon id='NTH'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.1031,129.3873),
+          new navermaps.LatLng(36.1033,129.3865),
+          new navermaps.LatLng(36.1036,129.3862),
+          new navermaps.LatLng(36.1033,129.3874)
+        ]}
+      />
+<Polygon id='ANH'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.1033,129.3865),
+          new navermaps.LatLng(36.1036,129.3862),
+          new navermaps.LatLng(36.1027,129.3858),
+          new navermaps.LatLng(36.1026,129.3862)
+        ]}
+      />
+
+<Polygon id='TC'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.10345,129.3889),
+          new navermaps.LatLng(36.10355,129.38865),
+          new navermaps.LatLng(36.1039,129.3887),
+          new navermaps.LatLng(36.1041,129.3879),
+          new navermaps.LatLng(36.1036,129.3877),
+          new navermaps.LatLng(36.1033,129.3889)
+        ]}
+      />
+
+<Polygon id='RG'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.1032,129.3888),
+          new navermaps.LatLng(36.1026,129.3886),
+          new navermaps.LatLng(36.1025,129.3882),
+          new navermaps.LatLng(36.1028,129.3873),
+          new navermaps.LatLng(36.1035,129.3876)
+        ]}
+      />
+
+<Polygon id='SU'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.1024,129.3898),
+          new navermaps.LatLng(36.1018,129.3896),
+          new navermaps.LatLng(36.1021,129.3886),
+          new navermaps.LatLng(36.1027,129.3888),
+          new navermaps.LatLng(36.1026,129.3894)
+        ]}
+      />
+
+<Polygon id='OH'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.1023391540599,129.3869946646486),
+          new navermaps.LatLng(36.102404798781954,129.38675239991272),
+          new navermaps.LatLng(36.10270670498624,129.38686145831636),
+          new navermaps.LatLng(36.10273795945913,129.38676248271895),
+          new navermaps.LatLng(36.103008184556984,129.38687890965696),
+          new navermaps.LatLng(36.102990381196854,129.38698106827565),
+          new navermaps.LatLng(36.103101995473764,129.38703163194313),
+          new navermaps.LatLng(36.103061056753596,129.38727742203233)
+        ]}
+      />
+
+<Polygon id='CSH'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.10246553840461,129.38664321458643),
+          new navermaps.LatLng(36.102546678926196,129.38630149675132),
+          new navermaps.LatLng(36.102808066041966,129.38640932755825),
+          new navermaps.LatLng(36.10273164849371,129.38674008693826),
+          new navermaps.LatLng(36.10264649423963,129.38671808066618),
+          new navermaps.LatLng(36.1026272139705, 129.38678133584253),
+          new navermaps.LatLng(36.10247524586832,129.38672122484925),
+          new navermaps.LatLng(36.10247432161328,129.38665458274428)
+        ]}
+      />
+
+<Polygon id='HDF'
+        fillColor= {fill}
+        strokeWeight={0}
+        fillOpacity={opacity}
+        clickable={true}
+        paths={[
+          new navermaps.LatLng(36.102205573070584,129.38736810034771),
+          new navermaps.LatLng(36.10256050920734,129.38752872680917),
+          new navermaps.LatLng(36.10235583694989,129.38819144636312),
+          new navermaps.LatLng(36.10211426883966,129.38810641511847),
+          new navermaps.LatLng(36.10221760896996,129.38766822726055),
+          new navermaps.LatLng(36.10215315712044,129.38762464231218)
+        ]}
+      />    
             </NaverMap>
           )}
           {sliderVisible && selectedMarkerInfo && (

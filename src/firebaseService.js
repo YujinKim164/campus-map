@@ -1,4 +1,4 @@
-import { db } from "./firebase";
+import { db } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 // 현재 시간 기준으로 장소가 운영 중인지 확인하는 함수
