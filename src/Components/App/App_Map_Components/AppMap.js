@@ -280,8 +280,8 @@ const AppMap = () => {
           }}
           onClick={handleMapClick}
         >
-          <BackgroundBlur isOpen={isNavOpen} onClick={toggleNav} />
-          <SearchContainer isVisible={isContainersVisible}>
+          <BackgroundBlur $isOpen={isNavOpen} onClick={toggleNav} />
+          <SearchContainer $isVisible={isContainersVisible}>
             <InputGroup>
               <SearchInput
                 type="text"
@@ -295,7 +295,7 @@ const AppMap = () => {
             </InputGroup>
             {isNavOpen && <Navigation />}
           </SearchContainer>
-          <ChipContainer visible={isContainersVisible}>
+          <ChipContainer $visible={isContainersVisible}>
             <ChipWrapper>
               <Chip>🍴{t("food")}</Chip>
               <Chip>☕{t("cafe")}</Chip>
@@ -597,7 +597,7 @@ const SliderContent = styled.div`
 `;
 
 const SearchContainer = styled.div`
-  display: ${(props) => (props.isVisible ? "flex" : "none")};
+  display: ${(props) => (props.$isVisible ? "flex" : "none")};
   position: absolute;
   top: 0;
   left: 0;
@@ -656,7 +656,7 @@ const MenuButton = styled.button`
   background-size: cover;
 `;
 const ChipContainer = styled.div`
-  display: ${(props) => (props.visible ? "flex" : "none")};
+  display: ${(props) => (props.$visible ? "flex" : "none")};
   position: absolute;
   top: 102px;
   margin-left: 13px;
@@ -732,7 +732,7 @@ const BackgroundBlur = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 10;
-  display: ${(props) => (props.isOpen ? "block" : "none")};
+  display: ${(props) => (props.$isOpen ? "block" : "none")};
 `;
 
 const isOpenNow = (operatingHours) => {
