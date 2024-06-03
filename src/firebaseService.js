@@ -1,10 +1,10 @@
-import { db } from "./Firebase";
+import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 // 현재 시간 기준으로 장소가 운영 중인지 확인하는 함수
 const isOpenNow = (operatingHours) => {
   const now = new Date();
-  const currentDay = now.getDay(); // 0: 일요일, 1: 월요일, ... 6: 토요일
+  const currentDay = now.getDay();
   const currentHour = now.getHours();
   const currentMinute = now.getMinutes();
 
