@@ -6,7 +6,7 @@ import {
 } from "react-naver-maps";
 import { useNavigate } from "react-router-dom";
 import { fetchOpenPlaces } from "./../../../firebaseService";
-import { db } from "./../../../firebase";
+import { db } from "./../../../Firebase";
 import React, { useState, useCallback, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import AppSplash from "../App_Splash_Components/AppSplash";
