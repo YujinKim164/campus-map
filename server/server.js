@@ -27,7 +27,7 @@ app.get("/searchLocal", async (req, res) => {
   const { query, display, start, sort } = req.query;
 
   // 요청 파라미터 로그 추가
-  console.log("Request parameters:", { query, display });
+  console.log("Request parameters:", { query, display, start, sort });
 
   try {
     console.log("서버 요청 start");
@@ -37,6 +37,8 @@ app.get("/searchLocal", async (req, res) => {
         params: {
           query,
           display,
+          start,
+          sort,
         },
         headers: {
           "X-Naver-Client-Id": NAVER_CLIENT_ID,

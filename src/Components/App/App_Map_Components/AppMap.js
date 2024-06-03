@@ -31,6 +31,7 @@ const AppMap = () => {
   const [markers, setMarkers] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [filteredPlaces, setFilteredPlaces] = useState([]);
+  const [filteredMarkers, setFilteredMarkers] = useState([]);
 
   const handleZoomChanged = useCallback((zoom) => {
     console.log(`zoom: ${zoom}`);
@@ -54,7 +55,11 @@ const AppMap = () => {
     setIsContainersVisible(false);
   };
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    const query = event.target.value;
+    setSearchQuery(query);
+    if (!query) {
+      setFilteredPlaces([]);
+    }
   };
   const handleMapInit = (map) => {
     setNaverMap(map);
@@ -161,23 +166,50 @@ const AppMap = () => {
       alert("검색어를 입력해주세요.");
       return;
     }
+
     try {
+      // 1. 사용자의 현재 위치 가져오기
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+      const { latitude, longitude } = position.coords;
+
+      // 2. 서버에서 검색 결과 가져오기
       const response = await axios.get("http://localhost:3002/searchLocal", {
         params: {
           query: searchQuery,
-          display: 5,
+          display: 5, // 5개의 결과만 가져오기
         },
-        withCredentials: true, // CORS 문제 해결을 위해 credentials 모드 설정
+        withCredentials: true,
       });
+
+      // 3. 사용자 위치와 검색 결과 장소들 간의 거리 계산
       const items = response.data.items.map((item) => ({
         title: item.title,
         latitude: item.mapy,
         longitude: item.mapx,
+        distance: calculateDistance(latitude, longitude, item.mapy, item.mapx),
       }));
-      console.log("Search Results:", items);
 
-      // 필터된 장소들을 상태에 저장하여 지도에 표시할 수 있도록 합니다.
+      // 4. 거리 순으로 정렬
+      items.sort((a, b) => a.distance - b.distance);
+
+      // 5. 상위 5개 장소 선택
+      const filteredPlaces = items.slice(0, 5);
+
+      // 6. 상태에 저장하여 지도에 표시
       setFilteredPlaces(items);
+      const markers = items.map((item) => (
+        <Marker
+          key={item.id}
+          position={new navermaps.LatLng(item.latitude, item.longitude)}
+          onClick={() => console.log(item)}
+        />
+      ));
+      setFilteredMarkers(markers);
+
+      // 7. 검색 결과 콘솔에 출력
+      console.log("Search Results:", filteredPlaces);
     } catch (error) {
       console.error("Error fetching data from Naver Search API", error);
       if (error.response) {
@@ -191,6 +223,46 @@ const AppMap = () => {
       alert("검색 중 오류가 발생했습니다.");
     }
   };
+
+  // 두 좌표 간의 거리 계산 함수
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // 지구 반지름 (km)
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+    return distance;
+  }
+
+  function toRad(value) {
+    return (value * Math.PI) / 180;
+  }
+
+  // 두 좌표 간의 거리 계산 함수
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // 지구 반지름 (km)
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+    return distance;
+  }
+
+  function toRad(value) {
+    return (value * Math.PI) / 180;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -247,7 +319,7 @@ const AppMap = () => {
             >
               <Marker position={currentPosition} />
               {/* 운영 중인 장소들 지도에 표시 */}
-              {openPlaces.map((place) => (
+              {/* {openPlaces.map((place) => (
                 <Marker
                   key={place.id}
                   position={
@@ -255,18 +327,9 @@ const AppMap = () => {
                   }
                   onClick={() => console.log(place)}
                 />
-              ))}
+              ))} */}
               {/* 검색된 장소들 지도에 표시 */}
-              {filteredPlaces.map((place, index) => (
-                <Marker
-                  key={index}
-                  position={
-                    new navermaps.LatLng(place.latitude, place.longitude)
-                  }
-                  onClick={() => console.log(place)}
-                />
-              ))}
-
+              {filteredMarkers}
               <Polygon
                 id="HDH"
                 fillColor={fill}
