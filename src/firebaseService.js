@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { db } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -52,3 +53,33 @@ export const fetchOpenPlaces = async () => {
     return [];
   }
 };
+
+const MyComponent = () => {
+  const [openPlaces, setOpenPlaces] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const places = await fetchOpenPlaces();
+        setOpenPlaces(places);
+      } catch (error) {
+        console.error("Error fetching open places: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {openPlaces.map((place) => (
+        <div key={place.id}>
+          <h3>{place.name}</h3>
+          <p>Operating Hours: {place.operating_hours[new Date().getDay()]}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default MyComponent;
