@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 import CaretLeft from "../../../Assets/img/CaretLeft.png";
+
+import { db } from "../../../Firebase";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
 const AppBuildingStudent = () => {
   const { t } = useTranslation();
@@ -21,6 +24,39 @@ const AppBuildingStudent = () => {
     setCafeClicked(true);
     setFoodClicked(false);
   };
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // '한동대학교' 컬렉션의 문서들을 가져옴
+        const universityCollectionRef = collection(db, "한동대학교");
+        const universityDocs = await getDocs(universityCollectionRef);
+        
+        const universityData = await Promise.all(universityDocs.docs.map(async buildingDoc => {
+          const buildingData = { id: buildingDoc.id, ...buildingDoc.data(), floors: [] };
+
+          // 각 건물 문서의 하위 컬렉션인 '1층' 문서들을 가져옴
+          const floorsCollectionRef = collection(buildingDoc.ref, "1층");
+          const floorDocs = await getDocs(floorsCollectionRef);
+
+          buildingData.floors = floorDocs.docs.map(floorDoc => ({
+            id: floorDoc.id,
+            ...floorDoc.data()
+          }));
+
+          return buildingData;
+        }));
+
+        setData(universityData);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -38,6 +74,23 @@ const AppBuildingStudent = () => {
             {t("cafe")}
           </Category>
         </CategoryDiv>
+        <div>
+          {data ? (
+            data.map(building => (
+              <div key={building.id}>
+                <h2>{building.name || building.id}</h2>
+                {building.floors.map(floor => (
+                  <div key={floor.id}>
+                    <h3>{floor.name || floor.id}</h3>
+                    <p>{floor.정보} {floor.시간}</p>
+                  </div>
+                ))}
+              </div>
+            ))
+          ) : (
+            <p>Loading...</p> // 데이터를 로드 중일 때 표시할 내용
+          )}
+        </div>
       </Div>
       <Link to="/building">{t("facilities")}</Link>
     </ThemeProvider>
