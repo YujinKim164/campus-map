@@ -8,7 +8,7 @@ import i18n from "../../../locales/i18n";
 import CaretLeft from "../../../Assets/img/CaretLeft.png";
 
 import { db } from "../../../Firebase";
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc } from "firebase/firestore";
 
 const AppBuildingStudent = () => {
   const { t } = useTranslation();
@@ -30,26 +30,24 @@ const AppBuildingStudent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // '한동대학교' 컬렉션의 문서들을 가져옴
-        const universityCollectionRef = collection(db, "한동대학교");
-        const universityDocs = await getDocs(universityCollectionRef);
+        const studentUnionDocRef = doc(db, "한동대학교", "학생회관");
         
-        const universityData = await Promise.all(universityDocs.docs.map(async buildingDoc => {
-          const buildingData = { id: buildingDoc.id, ...buildingDoc.data(), floors: [] };
+        const floorsData = [];
+        const collections = ["강의실", "대여 장소", "식당"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
 
-          // 각 건물 문서의 하위 컬렉션인 '1층' 문서들을 가져옴
-          const floorsCollectionRef = collection(buildingDoc.ref, "1층");
-          const floorDocs = await getDocs(floorsCollectionRef);
+        for (const collectionName of collections) {
+          const collectionRef = collection(studentUnionDocRef, collectionName);
+          const floorDocs = await getDocs(collectionRef);
 
-          buildingData.floors = floorDocs.docs.map(floorDoc => ({
-            id: floorDoc.id,
-            ...floorDoc.data()
-          }));
+          floorDocs.forEach(doc => {
+            floorsData.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+        }
 
-          return buildingData;
-        }));
-
-        setData(universityData);
+        setData(floorsData);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -74,23 +72,26 @@ const AppBuildingStudent = () => {
             {t("cafe")}
           </Category>
         </CategoryDiv>
-        <div>
+        <CardsContainer>
           {data ? (
-            data.map(building => (
-              <div key={building.id}>
-                <h2>{building.name || building.id}</h2>
-                {building.floors.map(floor => (
-                  <div key={floor.id}>
-                    <h3>{floor.name || floor.id}</h3>
-                    <p>{floor.정보} {floor.시간}</p>
-                  </div>
-                ))}
-              </div>
+            data.map(item => (
+              <Card key={item.id}>
+                <CardGrid>
+                  <CardHeaderLeft>이름</CardHeaderLeft>
+                  <CardHeaderRight>정보</CardHeaderRight>
+                  <CardBodyLeft>{item.id}</CardBodyLeft>
+                  <CardBodyRight>
+                    {Object.keys(item).filter(key => key !== 'id').map(key => (
+                      <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
+                    ))}
+                  </CardBodyRight>
+                </CardGrid>
+              </Card>
             ))
           ) : (
-            <p>Loading...</p> // 데이터를 로드 중일 때 표시할 내용
+            <p>Loading...</p>
           )}
-        </div>
+        </CardsContainer>
       </Div>
       <Link to="/building">{t("facilities")}</Link>
     </ThemeProvider>
@@ -159,4 +160,70 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 40px;
+`;
+
+const CardsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const Card = styled.div`
+  border-radius: 8px;
+  background-color: ${(props) => props.theme.colors.White};
+  box-shadow: 0 0 0 1px ${(props) => props.theme.colors.Primary_blue};
+  display: flex;
+  flex-direction: column;
+`;
+
+const CardGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  justify-items: stretch;
+  height: 100%;
+`;
+
+const CardHeaderLeft = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+const CardHeaderRight = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+const CardBodyLeft = styled.div`
+  padding: 16px;
+  border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+`;
+
+const CardBodyRight = styled.div`
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+`;
+
+const CardText = styled.div`
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.black_80};
+  text-align: center;
 `;
