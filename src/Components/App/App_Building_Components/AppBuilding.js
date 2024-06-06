@@ -20,7 +20,7 @@ const AppBuilding = () => {
       <MenuDiv onClick={() => navigate("/building/student")}>
         {t("student")}
       </MenuDiv>
-      <MenuDiv>{t("happiness")}</MenuDiv>
+      <MenuDiv onClick={() => navigate("/building/happy")}>{t("happiness")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/hdh")}>{t("HDH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/oh")}>{t("OH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/nth")}>{t("NTH")}</MenuDiv>
@@ -30,6 +30,7 @@ const AppBuilding = () => {
       <MenuDiv>{t("KGH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/eben")}>{t("EBEN")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/glc")}>{t("GLC")}</MenuDiv>
+      <MenuDiv onClick={() => navigate("/building/irc")}>{t("IRC")}</MenuDiv>
       <MenuDiv>{t("HCA")}</MenuDiv>
 
       <Link to="/">홈페이지</Link>
