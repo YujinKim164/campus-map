@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { fetchOpenPlaces } from "./../../../firebaseService";
 import { db } from "./../../../Firebase";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDoc, doc, getDocs } from "firebase/firestore";
 import React, { useState, useCallback, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import AppSplash from "../App_Splash_Components/AppSplash";
@@ -165,104 +165,87 @@ const AppMap = () => {
     }, 2000);
   }, []);
 
+  const buildingMap = {
+    "오석관": "OH",
+    "현동홀": "HDH",
+    "느헤미야홀": "NMH",
+    "뉴턴홀": "NTH",
+    "올네이션스홀": "ANH",
+    "학생회관": "SU",
+    "코너스톤홀": "CSH",
+    "복지동": "happiness",
+    "에벤에셀관": "EBEN",
+    "그레이스스쿨": "KGH",
+    "언어교육원": "GLC",
+    "효암채플": "HCA"
+  };
+  
   const handleSearch = async () => {
     console.log("handleSearch called with query:", searchQuery);
     if (!searchQuery) {
       alert("검색어를 입력해주세요.");
       return;
     }
-
+  
     try {
       const db = getFirestore();
-
-      // "buildings" 컬렉션의 문서 가져오기
-      const buildingsCollection = collection(db, "buildings");
-      const buildingsSnapshot = await getDocs(buildingsCollection);
-
+  
       let filteredData = null;
-
-      for (const buildingDoc of buildingsSnapshot.docs) {
-        const buildingId = buildingDoc.id;
-        console.log(`Processing buildingId: ${buildingId}`);
-
-        const placesCollection = collection(
-          db,
-          `buildings/${buildingId}/places`
-        );
-        const placesSnapshot = await getDocs(placesCollection);
-
-        for (const placeDoc of placesSnapshot.docs) {
-          const placeId = placeDoc.id;
-          console.log(`Processing placeId: ${placeId}`);
-
-          if (placeId === "복지동") {
-            const restaurantsCollection = collection(
-              db,
-              `buildings/${buildingId}/places/${placeId}/식당`
-            );
-            const restaurantsSnapshot = await getDocs(restaurantsCollection);
-
-            for (const restaurantDoc of restaurantsSnapshot.docs) {
-              const restaurantId = restaurantDoc.id;
-              console.log(`Processing restaurantId: ${restaurantId}`);
-
-              if (
-                restaurantId.toLowerCase().includes(searchQuery.toLowerCase())
-              ) {
-                const restaurantData = restaurantDoc.data();
-                console.log(restaurantData);
-                if (restaurantData.정보) {
-                  filteredData = {
-                    id: restaurantDoc.id,
-                    buildingId: buildingId,
-                    placeId: placeId,
-                    ...restaurantData,
-                  };
+      let found = false;
+  
+      for (const buildingName in buildingMap) {
+        if (buildingName.toLowerCase().includes(searchQuery.toLowerCase())) {
+          console.log(`Processing building: ${buildingName}`);
+  
+          const buildingId = buildingName;
+          const buildingDocRef = doc(db, `한동대학교/${buildingId}`);
+          const buildingDoc = await getDoc(buildingDocRef);
+  
+          if (buildingDoc.exists()) {
+            const buildingData = buildingDoc.data();
+            const floorKeys = Object.keys(buildingData);
+  
+            for (const floorKey of floorKeys) {
+              console.log(`Processing floor: ${floorKey}`);
+  
+              const facilitiesCollection = collection(db, `한동대학교/${buildingId}/${floorKey}`);
+              const facilitiesSnapshot = await getDocs(facilitiesCollection);
+  
+              for (const facilityDoc of facilitiesSnapshot.docs) {
+                const facilityData = facilityDoc.data();
+                const facilityName = facilityDoc.id;
+  
+                if (facilityName.toLowerCase().includes(searchQuery.toLowerCase())) {
+                  console.log(`Found facility: ${facilityName}`, facilityData);
+  
+                  const polygonId = buildingMap[buildingId];
+                  if (polygonId) {
+                    handlePolygonClick(polygonId);
+                    found = true;
+                    break;
+                  }
                 }
-                break; // 검색어에 해당하는 데이터를 찾으면 반복문 종료
               }
+  
+              if (found) break; // 층 내부에서 검색어에 해당하는 데이터를 찾으면 반복문 종료
             }
-
-            if (filteredData) break; // 검색어에 해당하는 데이터를 찾으면 반복문 종료
           }
+  
+          if (found) break; // 건물에서 검색어에 해당하는 데이터를 찾으면 반복문 종료
         }
-
-        if (filteredData) break; // 검색어에 해당하는 데이터를 찾으면 반복문 종료
       }
-
-      if (filteredData) {
-        console.log("Search Result:", filteredData);
-        // 추가로 검색 결과에 따라 필요한 작업을 수행할 수 있습니다.
-      } else {
+  
+      if (!found) {
         console.log("No matching results found");
-      }
-
-      // 상태에 저장하여 지도에 표시 (이 부분은 필요에 따라 수정)
-      if (filteredData) {
-        setFilteredPlaces([filteredData]);
-        const markers = (
-          <Marker
-            key={filteredData.id}
-            position={
-              new navermaps.LatLng(
-                filteredData.latitude,
-                filteredData.longitude
-              )
-            }
-            onClick={() => console.log(filteredData)}
-          />
-        );
-        setFilteredMarkers([markers]);
-      } else {
-        setFilteredPlaces([]);
-        setFilteredMarkers([]);
+        alert("검색 결과가 없습니다.");
       }
     } catch (error) {
       console.error("Error fetching data from Firebase", error);
       alert("검색 중 오류가 발생했습니다.");
     }
   };
-
+  
+  
   // 두 좌표 간의 거리 계산 함수
   function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // 지구 반지름 (km)
