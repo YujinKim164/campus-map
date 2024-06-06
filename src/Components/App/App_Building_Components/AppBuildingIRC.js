@@ -66,10 +66,7 @@ const AppBuildingIRC = () => {
         <BuildingTxt>{t("IRC")}</BuildingTxt>
         <CategoryDiv>
           <Category onClick={handleFoodClick} clicked={foodClicked}>
-            {t("food")}
-          </Category>
-          <Category onClick={handleCafeClick} clicked={cafeClicked}>
-            {t("cafe")}
+            {t("office")}
           </Category>
         </CategoryDiv>
         <CardsContainer>

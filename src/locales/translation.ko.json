@@ -7,6 +7,14 @@
   "dep": "출발",
   "arr": "도착",
   "office": "오피스",
+  "convenient": "편의시설",
+  "lecture": "강의실",
+  "rental": "대여 장소",
+  "first floor":"1층",
+  "second floor": "2층",
+  "thrid floor": "3층",
+  "fourth floor": "4층",
+
 
   "map": "길찾기",
   "directions": "내비게이션",
