@@ -15,13 +15,10 @@ import AppBuildingNMH from "./Components/App/App_Building_Components/AppBuilding
 import AppBuildingEBEN from "./Components/App/App_Building_Components/AppBuildingEBEN";
 import AppBuildingANH from "./Components/App/App_Building_Components/AppBuildingANH";
 import AppBuildingHDH from "./Components/App/App_Building_Components/AppBuildingHDH";
-<<<<<<< Updated upstream
 import AppBuildingHappy from "./Components/App/App_Building_Components/AppBuildingHappy";
 import AppBuildingIRC from "./Components/App/App_Building_Components/AppBuildingIRC";
-=======
 import AppBuildingCSH from "./Components/App/App_Building_Components/AppBuildingCSH";
 import AppBuildingKGH from "./Components/App/App_Building_Components/AppBuildingKGH";
->>>>>>> Stashed changes
 
 import AppSettingReport from "./Components/App/App_Setting_Components/AppSettingReport";
 
@@ -43,13 +40,10 @@ function App() {
           <Route path="/building/eben" element={<AppBuildingEBEN />} />
           <Route path="/building/anh" element={<AppBuildingANH />} />
           <Route path="/building/hdh" element={<AppBuildingHDH />} />
-<<<<<<< Updated upstream
           <Route path="/building/happy" element={<AppBuildingHappy />} />
           <Route path="/building/irc" element={<AppBuildingIRC />} />
-=======
           <Route path="/building/csh" element={<AppBuildingCSH />} />
           <Route path="/building/kgh" element={<AppBuildingKGH />} />
->>>>>>> Stashed changes
 
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/setting/report" element={<AppSettingReport />} />
