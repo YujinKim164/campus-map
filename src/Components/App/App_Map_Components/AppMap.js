@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { fetchOpenPlaces } from "./../../../firebaseService";
 import { db } from "./../../../Firebase";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 import React, { useState, useCallback, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import AppSplash from "../App_Splash_Components/AppSplash";
@@ -62,11 +63,7 @@ const AppMap = () => {
     setIsContainersVisible(false);
   };
   const handleSearchChange = (event) => {
-    const query = event.target.value;
-    setSearchQuery(query);
-    if (!query) {
-      setFilteredPlaces([]);
-    }
+    setSearchQuery(event.target.value);
   };
   const handleMapInit = (map) => {
     setNaverMap(map);
@@ -169,64 +166,99 @@ const AppMap = () => {
   }, []);
 
   const handleSearch = async () => {
+    console.log("handleSearch called with query:", searchQuery);
     if (!searchQuery) {
       alert("검색어를 입력해주세요.");
       return;
     }
 
     try {
-      // 1. 사용자의 현재 위치 가져오기
-      const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-      const { latitude, longitude } = position.coords;
+      const db = getFirestore();
 
-      // 2. 서버에서 검색 결과 가져오기
-      const response = await axios.get("http://localhost:3002/searchLocal", {
-        params: {
-          query: searchQuery,
-          display: 5, // 5개의 결과만 가져오기
-        },
-        withCredentials: true,
-      });
+      // "buildings" 컬렉션의 문서 가져오기
+      const buildingsCollection = collection(db, "buildings");
+      const buildingsSnapshot = await getDocs(buildingsCollection);
 
-      // 3. 사용자 위치와 검색 결과 장소들 간의 거리 계산
-      const items = response.data.items.map((item) => ({
-        title: item.title,
-        latitude: item.mapy,
-        longitude: item.mapx,
-        distance: calculateDistance(latitude, longitude, item.mapy, item.mapx),
-      }));
+      let filteredData = null;
 
-      // 4. 거리 순으로 정렬
-      items.sort((a, b) => a.distance - b.distance);
+      for (const buildingDoc of buildingsSnapshot.docs) {
+        const buildingId = buildingDoc.id;
+        console.log(`Processing buildingId: ${buildingId}`);
 
-      // 5. 상위 5개 장소 선택
-      const filteredPlaces = items.slice(0, 5);
+        const placesCollection = collection(
+          db,
+          `buildings/${buildingId}/places`
+        );
+        const placesSnapshot = await getDocs(placesCollection);
 
-      // 6. 상태에 저장하여 지도에 표시
-      setFilteredPlaces(items);
-      const markers = items.map((item) => (
-        <Marker
-          key={item.id}
-          position={new navermaps.LatLng(item.latitude, item.longitude)}
-          onClick={() => console.log(item)}
-        />
-      ));
-      setFilteredMarkers(markers);
+        for (const placeDoc of placesSnapshot.docs) {
+          const placeId = placeDoc.id;
+          console.log(`Processing placeId: ${placeId}`);
 
-      // 7. 검색 결과 콘솔에 출력
-      console.log("Search Results:", filteredPlaces);
-    } catch (error) {
-      console.error("Error fetching data from Naver Search API", error);
-      if (error.response) {
-        console.error("Status Code:", error.response.status);
-        console.error("Response Data:", error.response.data);
-      } else if (error.request) {
-        console.error("No response received:", error.request);
-      } else {
-        console.error("Error setting up the request:", error.message);
+          if (placeId === "복지동") {
+            const restaurantsCollection = collection(
+              db,
+              `buildings/${buildingId}/places/${placeId}/식당`
+            );
+            const restaurantsSnapshot = await getDocs(restaurantsCollection);
+
+            for (const restaurantDoc of restaurantsSnapshot.docs) {
+              const restaurantId = restaurantDoc.id;
+              console.log(`Processing restaurantId: ${restaurantId}`);
+
+              if (
+                restaurantId.toLowerCase().includes(searchQuery.toLowerCase())
+              ) {
+                const restaurantData = restaurantDoc.data();
+                console.log(restaurantData);
+                if (restaurantData.정보) {
+                  filteredData = {
+                    id: restaurantDoc.id,
+                    buildingId: buildingId,
+                    placeId: placeId,
+                    ...restaurantData,
+                  };
+                }
+                break; // 검색어에 해당하는 데이터를 찾으면 반복문 종료
+              }
+            }
+
+            if (filteredData) break; // 검색어에 해당하는 데이터를 찾으면 반복문 종료
+          }
+        }
+
+        if (filteredData) break; // 검색어에 해당하는 데이터를 찾으면 반복문 종료
       }
+
+      if (filteredData) {
+        console.log("Search Result:", filteredData);
+        // 추가로 검색 결과에 따라 필요한 작업을 수행할 수 있습니다.
+      } else {
+        console.log("No matching results found");
+      }
+
+      // 상태에 저장하여 지도에 표시 (이 부분은 필요에 따라 수정)
+      if (filteredData) {
+        setFilteredPlaces([filteredData]);
+        const markers = (
+          <Marker
+            key={filteredData.id}
+            position={
+              new navermaps.LatLng(
+                filteredData.latitude,
+                filteredData.longitude
+              )
+            }
+            onClick={() => console.log(filteredData)}
+          />
+        );
+        setFilteredMarkers([markers]);
+      } else {
+        setFilteredPlaces([]);
+        setFilteredMarkers([]);
+      }
+    } catch (error) {
+      console.error("Error fetching data from Firebase", error);
       alert("검색 중 오류가 발생했습니다.");
     }
   };

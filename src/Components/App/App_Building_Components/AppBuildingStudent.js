@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 import CaretLeft from "../../../Assets/img/CaretLeft.png";
+
+import { db } from "../../../Firebase";
+import { collection, getDocs, doc } from "firebase/firestore";
 
 const AppBuildingStudent = () => {
   const { t } = useTranslation();
@@ -21,6 +24,37 @@ const AppBuildingStudent = () => {
     setCafeClicked(true);
     setFoodClicked(false);
   };
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const studentUnionDocRef = doc(db, "한동대학교", "학생회관");
+        
+        const floorsData = [];
+        const collections = ["강의실", "대여 장소", "식당"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
+
+        for (const collectionName of collections) {
+          const collectionRef = collection(studentUnionDocRef, collectionName);
+          const floorDocs = await getDocs(collectionRef);
+
+          floorDocs.forEach(doc => {
+            floorsData.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+        }
+
+        setData(floorsData);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -38,6 +72,26 @@ const AppBuildingStudent = () => {
             {t("cafe")}
           </Category>
         </CategoryDiv>
+        <CardsContainer>
+          {data ? (
+            data.map(item => (
+              <Card key={item.id}>
+                <CardGrid>
+                  <CardHeaderLeft>이름</CardHeaderLeft>
+                  <CardHeaderRight>정보</CardHeaderRight>
+                  <CardBodyLeft>{item.id}</CardBodyLeft>
+                  <CardBodyRight>
+                    {Object.keys(item).filter(key => key !== 'id').map(key => (
+                      <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
+                    ))}
+                  </CardBodyRight>
+                </CardGrid>
+              </Card>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </CardsContainer>
       </Div>
       <Link to="/building">{t("facilities")}</Link>
     </ThemeProvider>
@@ -106,4 +160,70 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 40px;
+`;
+
+const CardsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const Card = styled.div`
+  border-radius: 8px;
+  background-color: ${(props) => props.theme.colors.White};
+  box-shadow: 0 0 0 1px ${(props) => props.theme.colors.Primary_blue};
+  display: flex;
+  flex-direction: column;
+`;
+
+const CardGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  justify-items: stretch;
+  height: 100%;
+`;
+
+const CardHeaderLeft = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+const CardHeaderRight = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+const CardBodyLeft = styled.div`
+  padding: 16px;
+  border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+`;
+
+const CardBodyRight = styled.div`
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+`;
+
+const CardText = styled.div`
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.black_80};
+  text-align: center;
 `;
