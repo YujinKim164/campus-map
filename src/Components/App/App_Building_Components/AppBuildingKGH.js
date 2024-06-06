@@ -10,11 +10,9 @@ import CaretLeft from "../../../Assets/img/CaretLeft.png";
 import { db } from "../../../Firebase";
 import { collection, getDocs, doc } from "firebase/firestore";
 
-const AppBuildingOH = () => {
+const AppBuildingKGH = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedFloor, setSelectedFloor] = useState("1층");
-
   const [foodClicked, setFoodClicked] = useState(false);
   const [cafeClicked, setCafeClicked] = useState(false);
   const handleFoodClick = () => {
@@ -32,10 +30,10 @@ const AppBuildingOH = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const studentUnionDocRef = doc(db, "한동대학교", "오석관");
+        const studentUnionDocRef = doc(db, "한동대학교", "Grace스쿨");
 
         const floorsData = [];
-        const collections = ["1층", "2층", "3층", "4층"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
+        const collections = ["1층", "2층"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
 
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);
@@ -65,7 +63,7 @@ const AppBuildingOH = () => {
         <TopAppBarTxt>{t("facilityDetail")}</TopAppBarTxt>
       </TopAppBar>
       <Div>
-        <BuildingTxt>{t("OH")}</BuildingTxt>
+        <BuildingTxt>{t("KGH")}</BuildingTxt>
         <CategoryDiv>
           <Category onClick={handleFoodClick} clicked={foodClicked}>
             {t("food")}
@@ -102,7 +100,7 @@ const AppBuildingOH = () => {
   );
 };
 
-export default AppBuildingOH;
+export default AppBuildingKGH;
 
 const Div = styled.div`
   padding-left: 23px;

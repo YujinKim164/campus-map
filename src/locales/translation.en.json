@@ -45,5 +45,10 @@
   "report": "Report",
   "cancel": "Cancel",
   "ok": "OK",
-  "homePage": "Homepage"
+  "homePage": "Homepage",
+
+  "first": "1F",
+  "second": "2F",
+  "third": "3F",
+  "fourth": "4F"
 }

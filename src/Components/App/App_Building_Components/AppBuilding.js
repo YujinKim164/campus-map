@@ -26,8 +26,8 @@ const AppBuilding = () => {
       <MenuDiv onClick={() => navigate("/building/nth")}>{t("NTH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/nmh")}>{t("NMH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/anh")}>{t("ANH")}</MenuDiv>
-      <MenuDiv>{t("CSH")}</MenuDiv>
-      <MenuDiv>{t("KGH")}</MenuDiv>
+      <MenuDiv onClick={() => navigate("/building/csh")}>{t("CSH")}</MenuDiv>
+      <MenuDiv onClick={() => navigate("/building/kgh")}>{t("KGH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/eben")}>{t("EBEN")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/glc")}>{t("GLC")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/irc")}>{t("IRC")}</MenuDiv>

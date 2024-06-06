@@ -13,19 +13,8 @@ import { collection, getDocs, doc } from "firebase/firestore";
 const AppBuildingHDH = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [foodClicked, setFoodClicked] = useState(false);
-  const [cafeClicked, setCafeClicked] = useState(false);
-  const handleFoodClick = () => {
-    setFoodClicked(true);
-    setCafeClicked(false);
-  };
-
-  const handleCafeClick = () => {
-    setCafeClicked(true);
-    setFoodClicked(false);
-  };
-
-  const [data, setData] = useState(null);
+  const [selectedFloor, setSelectedFloor] = useState("1층");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,12 +28,10 @@ const AppBuildingHDH = () => {
           const collectionRef = collection(studentUnionDocRef, collectionName);
           const floorDocs = await getDocs(collectionRef);
 
-          floorDocs.forEach((doc) => {
-            floorsData.push({
-              id: doc.id,
-              ...doc.data(),
-            });
-          });
+          floorsData[collectionName] = floorDocs.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
         }
 
         setData(floorsData);
@@ -65,16 +52,19 @@ const AppBuildingHDH = () => {
       <Div>
         <BuildingTxt>{t("HDH")}</BuildingTxt>
         <CategoryDiv>
-          <Category onClick={handleFoodClick} clicked={foodClicked}>
-            {t("food")}
-          </Category>
-          <Category onClick={handleCafeClick} clicked={cafeClicked}>
-            {t("cafe")}
-          </Category>
+          {["1층", "2층", "3층", "4층"].map((floor) => (
+            <Category
+              key={floor}
+              onClick={() => setSelectedFloor(floor)}
+              clicked={selectedFloor === floor}
+            >
+              {floor}
+            </Category>
+          ))}
         </CategoryDiv>
         <CardsContainer>
-          {data ? (
-            data.map((item) => (
+          {data[selectedFloor] ? (
+            data[selectedFloor].map((item) => (
               <Card key={item.id}>
                 <CardGrid>
                   <CardHeaderLeft>이름</CardHeaderLeft>
@@ -84,7 +74,7 @@ const AppBuildingHDH = () => {
                     {Object.keys(item)
                       .filter((key) => key !== "id")
                       .map((key) => (
-                        <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
+                        <CardText key={key}>{`${item[key]}`}</CardText>
                       ))}
                   </CardBodyRight>
                 </CardGrid>

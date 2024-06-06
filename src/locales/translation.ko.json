@@ -57,5 +57,10 @@
   "report": "보내기",
   "cancel": "취소",
   "ok": "확인",
-  "homePage": "홈페이지"
+  "homePage": "홈페이지",
+
+  "first": "1층",
+  "second": "2층",
+  "third": "3층",
+  "fourth": "4층"
 }
