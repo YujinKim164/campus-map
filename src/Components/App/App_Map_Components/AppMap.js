@@ -375,7 +375,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.103916, 129.388844),
                   new navermaps.LatLng(36.103542, 129.388708),
                 ]}
-                onClick={() => handlePolygonClick('HDH','Polygon HDH Information')}
+                onClick={() => handlePolygonClick('HDH','Polygon HDH Information','hdh')}
               />
 
               <Polygon
@@ -392,7 +392,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.10388, 129.386484),
                   new navermaps.LatLng(36.103605, 129.387548),
                 ]}
-                onClick={() => handlePolygonClick('NMH','Polygon NMH Information')}
+                onClick={() => handlePolygonClick('NMH','Polygon NMH Information','nmh')}
               />
 
               <Polygon
@@ -407,7 +407,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.1036, 129.3862),
                   new navermaps.LatLng(36.1033, 129.3874),
                 ]}
-                onClick={() => handlePolygonClick('NTH','Polygon NTH Information')}
+                onClick={() => handlePolygonClick('NTH','Polygon NTH Information','nth')}
               />
               <Polygon
                 id="ANH"
@@ -421,7 +421,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.1027, 129.3858),
                   new navermaps.LatLng(36.1026, 129.3862),
                 ]}
-                onClick={() => handlePolygonClick('ANH','Polygon ANH Information')}
+                onClick={() => handlePolygonClick('ANH','Polygon ANH Information','anh')}
               />
 
               <Polygon
@@ -456,7 +456,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.103101995473764, 129.38703163194313),
                   new navermaps.LatLng(36.103061056753596, 129.38727742203233),
                 ]}
-                onClick={() => handlePolygonClick('OH','Polygon OH Information')}
+                onClick={() => handlePolygonClick('OH','Polygon OH Information', 'oh')}
               />
 
               <Polygon
@@ -475,7 +475,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.10247524586832, 129.38672122484925),
                   new navermaps.LatLng(36.10247432161328, 129.38665458274428),
                 ]}
-                onClick={() => handlePolygonClick('CSH','Polygon CSH Information')}
+                onClick={() => handlePolygonClick('CSH','Polygon CSH Information', 'csh')}
               />
 
               <Polygon
@@ -505,7 +505,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.10300581281624,129.39207754774174),
                   new navermaps.LatLng(36.1032869921518,129.39108130411196)
                 ]}
-                onClick={() => handlePolygonClick('EBEN','Polygon EBEN Information','EBEN')}
+                onClick={() => handlePolygonClick('EBEN','Polygon EBEN Information','eben')}
               />
 
               <Polygon
@@ -520,7 +520,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.10180858863123,129.3820797309546),
                   new navermaps.LatLng(36.102334306562014,129.38146832720898)
                 ]}
-                onClick={() => handlePolygonClick('KGH','Polygon KGH Information','KGH')}
+                onClick={() => handlePolygonClick('KGH','Polygon KGH Information','kgh')}
               />
 
               <Polygon
@@ -535,7 +535,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.10454020658121,129.38968428655275),
                   new navermaps.LatLng(36.104647778306834,129.38926009412958)
                 ]}
-                onClick={() => handlePolygonClick('GLC','Polygon GLC Information','GLC')}
+                onClick={() => handlePolygonClick('GLC','Polygon GLC Information','glc')}
               />
 
               <Polygon
@@ -550,7 +550,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.10427549612388,129.39075876855028),
                   new navermaps.LatLng(36.10450887560636,129.38989983849623)
                 ]}
-                onClick={() => handlePolygonClick('HCA','Polygon HCA Information','HCA')}
+                onClick={() => handlePolygonClick('HCA','Polygon HCA Information','hca')}
               />
 
             </NaverMap>
