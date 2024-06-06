@@ -1,0 +1,28 @@
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  will-change: transform;
+  touch-action: none;
+  z-index: 2;
+}
+
+.bottom-sheet-content {
+  padding: 16px;
+}
+
+.dimmer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}

@@ -5,7 +5,7 @@ const cors = require("cors");
 require("dotenv").config(); // .env 파일 로드
 
 const app = express();
-const port = 3002;
+const port = 3000;
 
 const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_ID;
 const NAVER_CLIENT_SECRET = process.env.REACT_APP_NAVER_SECRET_ID;

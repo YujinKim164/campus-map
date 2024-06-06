@@ -18,9 +18,10 @@ import { useTranslation } from "react-i18next";
 import i18n from "./../../../locales/i18n";
 import Modal from "react-modal";
 import placesData from "./../../../places.json";
+import BottomSheet from './BottomSheet';
 
 const AppMap = () => {
-  const fill = "#ff0000";
+  const fill = "#dbffe8";
   const opacity = 0.3;
   const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
   const NAVER_ID = process.env.REACT_APP_NAVER_ID;
@@ -46,6 +47,12 @@ const AppMap = () => {
   const [isContainersVisible, setIsContainersVisible] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+  const [bottomSheetContent, setBottomSheetContent] = useState('');
+  const [bottomSheetTitle, setBottomSheetTitle] = useState('');
+  const [bottomSheetDetail, setBottomSheetDetail] = useState('');
+  const [map, setMap] = useState(null);
 
   const { t } = useTranslation();
   const toggleNav = () => {
@@ -264,6 +271,13 @@ const AppMap = () => {
     return (value * Math.PI) / 180;
   }
 
+  const handlePolygonClick = (title,content, detail) => {
+    setBottomSheetTitle(title);
+    setBottomSheetContent(content);
+    setBottomSheetDetail(detail);
+    setBottomSheetOpen(true);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       {loading ? (
@@ -346,6 +360,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.103916, 129.388844),
                   new navermaps.LatLng(36.103542, 129.388708),
                 ]}
+                onClick={() => handlePolygonClick('HDH','Polygon HDH Information')}
               />
 
               <Polygon
@@ -357,27 +372,12 @@ const AppMap = () => {
                 paths={[
                   new navermaps.LatLng(36.104242, 129.387804),
                   new navermaps.LatLng(36.104245, 129.38754),
-                  new navermaps.LatLng(36.103859, 129.387395),
+                  new navermaps.LatLng(36.10447828523909, 129.38669025012575),
                   new navermaps.LatLng(36.104072, 129.386555),
                   new navermaps.LatLng(36.10388, 129.386484),
                   new navermaps.LatLng(36.103605, 129.387548),
                 ]}
-              />
-
-              <Polygon
-                id="PB"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.1028, 129.3889),
-                  new navermaps.LatLng(36.1039, 129.3894),
-                  new navermaps.LatLng(36.104, 129.3897),
-                  new navermaps.LatLng(36.1039, 129.3901),
-                  new navermaps.LatLng(36.1037, 129.3902),
-                  new navermaps.LatLng(36.1026, 129.3899),
-                ]}
+                onClick={() => handlePolygonClick('NMH','Polygon NMH Information')}
               />
 
               <Polygon
@@ -392,6 +392,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.1036, 129.3862),
                   new navermaps.LatLng(36.1033, 129.3874),
                 ]}
+                onClick={() => handlePolygonClick('NTH','Polygon NTH Information')}
               />
               <Polygon
                 id="ANH"
@@ -405,41 +406,11 @@ const AppMap = () => {
                   new navermaps.LatLng(36.1027, 129.3858),
                   new navermaps.LatLng(36.1026, 129.3862),
                 ]}
+                onClick={() => handlePolygonClick('ANH','Polygon ANH Information')}
               />
 
               <Polygon
-                id="TC"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.10345, 129.3889),
-                  new navermaps.LatLng(36.10355, 129.38865),
-                  new navermaps.LatLng(36.1039, 129.3887),
-                  new navermaps.LatLng(36.1041, 129.3879),
-                  new navermaps.LatLng(36.1036, 129.3877),
-                  new navermaps.LatLng(36.1033, 129.3889),
-                ]}
-              />
-
-              <Polygon
-                id="RG"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.1032, 129.3888),
-                  new navermaps.LatLng(36.1026, 129.3886),
-                  new navermaps.LatLng(36.1025, 129.3882),
-                  new navermaps.LatLng(36.1028, 129.3873),
-                  new navermaps.LatLng(36.1035, 129.3876),
-                ]}
-              />
-
-              <Polygon
-                id="SU"
+                id="student"
                 fillColor={fill}
                 strokeWeight={0}
                 fillOpacity={opacity}
@@ -451,6 +422,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.1027, 129.3888),
                   new navermaps.LatLng(36.1026, 129.3894),
                 ]}
+                onClick={() => handlePolygonClick('SU','Polygon SU Information','student')}
               />
 
               <Polygon
@@ -469,6 +441,7 @@ const AppMap = () => {
                   new navermaps.LatLng(36.103101995473764, 129.38703163194313),
                   new navermaps.LatLng(36.103061056753596, 129.38727742203233),
                 ]}
+                onClick={() => handlePolygonClick('OH','Polygon OH Information')}
               />
 
               <Polygon
@@ -487,25 +460,93 @@ const AppMap = () => {
                   new navermaps.LatLng(36.10247524586832, 129.38672122484925),
                   new navermaps.LatLng(36.10247432161328, 129.38665458274428),
                 ]}
+                onClick={() => handlePolygonClick('CSH','Polygon CSH Information')}
               />
 
               <Polygon
-                id="HDF"
+                id="happiness"
                 fillColor={fill}
                 strokeWeight={0}
                 fillOpacity={opacity}
                 clickable={true}
                 paths={[
-                  new navermaps.LatLng(36.102205573070584, 129.38736810034771),
-                  new navermaps.LatLng(36.10256050920734, 129.38752872680917),
-                  new navermaps.LatLng(36.10235583694989, 129.38819144636312),
-                  new navermaps.LatLng(36.10211426883966, 129.38810641511847),
-                  new navermaps.LatLng(36.10221760896996, 129.38766822726055),
-                  new navermaps.LatLng(36.10215315712044, 129.38762464231218),
+                  new navermaps.LatLng(36.10200753789937,129.38984346627404),
+                  new navermaps.LatLng(36.10240337729534,129.38998591383793),
+                  new navermaps.LatLng(36.10223367616448,129.39058862270784),
+                  new navermaps.LatLng(36.10185946243513,129.39049123700366)
                 ]}
+                onClick={() => handlePolygonClick('happiness','Polygon happiness Information','happiness')}
               />
+
+              <Polygon
+                id="EBEN"
+                fillColor={fill}
+                strokeWeight={0}
+                fillOpacity={opacity}
+                clickable={true}
+                paths={[
+                  new navermaps.LatLng(36.103470362021156,129.39114792753975),
+                  new navermaps.LatLng(36.10321746943663,129.39208119215698),
+                  new navermaps.LatLng(36.10300581281624,129.39207754774174),
+                  new navermaps.LatLng(36.1032869921518,129.39108130411196)
+                ]}
+                onClick={() => handlePolygonClick('EBEN','Polygon EBEN Information','EBEN')}
+              />
+
+              <Polygon
+                id="KGH"
+                fillColor={fill}
+                strokeWeight={0}
+                fillOpacity={opacity}
+                clickable={true}
+                paths={[
+                  new navermaps.LatLng(36.10287200863515,129.3824060653951),
+                  new navermaps.LatLng(36.10232044408132,129.38284459941008),
+                  new navermaps.LatLng(36.10180858863123,129.3820797309546),
+                  new navermaps.LatLng(36.102334306562014,129.38146832720898)
+                ]}
+                onClick={() => handlePolygonClick('KGH','Polygon KGH Information','KGH')}
+              />
+
+              <Polygon
+                id="GLC"
+                fillColor={fill}
+                strokeWeight={0}
+                fillOpacity={opacity}
+                clickable={true}
+                paths={[
+                  new navermaps.LatLng(36.10484037498513,129.38931589155865),
+                  new navermaps.LatLng(36.10470996007895,129.38975604667016),
+                  new navermaps.LatLng(36.10454020658121,129.38968428655275),
+                  new navermaps.LatLng(36.104647778306834,129.38926009412958)
+                ]}
+                onClick={() => handlePolygonClick('GLC','Polygon GLC Information','GLC')}
+              />
+
+              <Polygon
+                id="HCA"
+                fillColor={fill}
+                strokeWeight={0}
+                fillOpacity={opacity}
+                clickable={true}
+                paths={[
+                  new navermaps.LatLng(36.10471025480041,129.38996700619964),
+                  new navermaps.LatLng(36.10447698553392,129.39082039023216),
+                  new navermaps.LatLng(36.10427549612388,129.39075876855028),
+                  new navermaps.LatLng(36.10450887560636,129.38989983849623)
+                ]}
+                onClick={() => handlePolygonClick('HCA','Polygon HCA Information','HCA')}
+              />
+
             </NaverMap>
           )}
+          <BottomSheet
+        isOpen={isBottomSheetOpen}
+        onClose={() => setBottomSheetOpen(false)}
+        title={bottomSheetTitle}
+        content={bottomSheetContent}
+        detail={bottomSheetDetail}
+      />
           {sliderVisible && selectedMarkerInfo && (
             <Slider
               sliderPosition={sliderPosition}
