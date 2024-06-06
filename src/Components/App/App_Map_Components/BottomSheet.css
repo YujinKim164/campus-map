@@ -4,9 +4,10 @@
   left: 0;
   right: 0;
   height: 50%;
-  background: #e0ffff; /* 밝기를 2배 올린 하늘색 배경 */
+  background: #ffffff; 
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  border: 10px solid rgb(39, 178, 243); /* 테두리 색상과 두께 설정 */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   will-change: transform;
   touch-action: none;
@@ -42,7 +43,7 @@
 }
 
 .bottom-sheet-content button {
-  background-color: #005cbf;
+  background-color: #2eb8fd;
   color: white;
   border: none;
   padding: 10px 20px;
