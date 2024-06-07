@@ -380,6 +380,75 @@ const AppMap = () => {
     setBottomSheetDetail(detail);
     setBottomSheetOpen(true);
   };
+  const handleChipClick = async (chipType) => {
+    console.log(`handleChipClick called with type: ${chipType}`);
+
+    const db = getFirestore();
+
+    // 각 chipType에 따라 조회할 경로를 설정합니다.
+    const paths = {
+      cafe: [
+        { building: "코너스톤홀", floor: "1층", target: "예소드" },
+        { building: "학생회관", floor: "식당", target: "애인트" },
+        { building: "복지동", floor: "식당", target: "드롭탑카페" },
+        { building: "오석관", floor: "3층", target: "히즈빈스" },
+      ],
+      food: [
+        { building: "학생회관", floor: "식당", target: "맘스" },
+        { building: "학생회관", floor: "식당", target: "학생식당" },
+        { building: "복지동", floor: "식당", target: "라운지" },
+        { building: "복지동", floor: "식당", target: "명성" },
+        { building: "복지동", floor: "식당", target: "버거킹" },
+        { building: "Grace스쿨", floor: "1층", target: "그레이스 더 테이블" },
+      ],
+      cvs: [
+        { building: "복지동", floor: "편의시설", target: "GS25" },
+        { building: "오석관", floor: "3층", target: "CU" },
+      ],
+    };
+
+    if (!paths[chipType]) {
+      console.error(`Invalid chip type: ${chipType}`);
+      return;
+    }
+
+    try {
+      for (const path of paths[chipType]) {
+        const { building, floor, target } = path;
+
+        if (target) {
+          const docRef = doc(db, `한동대학교/${building}/${floor}/${target}`);
+          const docSnapshot = await getDoc(docRef);
+
+          if (docSnapshot.exists()) {
+            console.log(
+              `Building: ${building}, Floor: ${floor}, Facility: ${target}`,
+              docSnapshot.data()
+            );
+          } else {
+            console.log(
+              `Building: ${building}, Floor: ${floor}, Facility: ${target} not found`
+            );
+          }
+        } else {
+          const collectionRef = collection(
+            db,
+            `한동대학교/${building}/${floor}`
+          );
+          const snapshot = await getDocs(collectionRef);
+
+          snapshot.forEach((doc) => {
+            console.log(
+              `Building: ${building}, Floor: ${floor}, Facility: ${doc.id}`,
+              doc.data()
+            );
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching data from Firebase", error);
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -414,9 +483,9 @@ const AppMap = () => {
           </SearchContainer>
           <ChipContainer $visible={isContainersVisible}>
             <ChipWrapper>
-              <Chip>🍴{t("food")}</Chip>
-              <Chip>☕{t("cafe")}</Chip>
-              <Chip>🍱{t("cvs")}</Chip>
+              <Chip onClick={() => handleChipClick("food")}>🍴{t("food")}</Chip>
+              <Chip onClick={() => handleChipClick("cafe")}>☕{t("cafe")}</Chip>
+              <Chip onClick={() => handleChipClick("cvs")}>🍱{t("cvs")}</Chip>
             </ChipWrapper>
             {isNavOpen && <Navigation />}
           </ChipContainer>
@@ -660,9 +729,6 @@ const Navigation = () => {
   return (
     <NavigationDrawerWrapper onClick={handleNavClick}>
       <NavigationDrawerContent>📍 {t("map")}</NavigationDrawerContent>
-      <NavigationDrawerContent onClick={() => navigate("/")}>
-        🧭 {t("directions")}
-      </NavigationDrawerContent>
       <NavigationDrawerContent onClick={() => navigate("/building")}>
         🏢 {t("Facilities")}
       </NavigationDrawerContent>
