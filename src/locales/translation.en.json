@@ -3,7 +3,7 @@
   "food": "Food",
   "cafe": "Cafe",
   "cvs": "CVS",
-  "sports": "Sports",
+  "detection": "Building Detection",
   "dep": "Dep.",
   "arr": "Arr.",
 
@@ -55,6 +55,8 @@
   "hisbeans":"Hisbeans",
   "size": "Text size",
   "language": "Language",
+  "ko": "Korean",
+  "en": "English",
   "version": "Version",
   "mapVersion": "Naver Map SDK version",
 

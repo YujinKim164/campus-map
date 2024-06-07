@@ -21,7 +21,6 @@ import { theme } from "../../../Style/theme";
 import axios from "axios";
 import FindRoute from "../../../Assets/img/FindRoute.png";
 import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
-import CameraIcon from "../../../Assets/img/CameraIcon.png"; // Add Camera icon
 import { useTranslation } from "react-i18next";
 import i18n from "./../../../locales/i18n";
 import YOLO_Modal from "./YOLO_Modal"; // Import the renamed modal component
@@ -400,6 +399,11 @@ const AppMap = () => {
     setBottomSheetOpen(true);
   };
   const handleChipClick = async (chipType) => {
+    if (chipType === "camera") {
+      handleCameraClick();
+      return;
+    }
+
     console.log(`handleChipClick called with type: ${chipType}`);
     navigate("/chip", { state: { chipType } });
 
@@ -477,7 +481,6 @@ const AppMap = () => {
               <FindRouteButton onClick={handleSearch} />
               <MenuButton onClick={toggleNav} />
             </InputGroup>
-            <CameraButton onClick={handleCameraClick} /> {/* 카메라 버튼 추가 */}
             {isNavOpen && <Navigation />}
           </SearchContainer>
           <ChipContainer $visible={isContainersVisible}>
@@ -485,6 +488,9 @@ const AppMap = () => {
               <Chip onClick={() => handleChipClick("food")}>🍴{t("food")}</Chip>
               <Chip onClick={() => handleChipClick("cafe")}>☕{t("cafe")}</Chip>
               <Chip onClick={() => handleChipClick("cvs")}>🍱{t("cvs")}</Chip>
+              <Chip onClick={() => handleChipClick("camera")}>
+                📷{t("detection")}
+              </Chip>
             </ChipWrapper>
             {isNavOpen && <Navigation />}
           </ChipContainer>
@@ -534,7 +540,6 @@ const AppMap = () => {
                 />
               ))}
             </NaverMap>
-            
           )}
           <YOLO_Modal show={show} handleClose={handleClose} />
           <BottomSheet
@@ -545,7 +550,6 @@ const AppMap = () => {
             detail={bottomSheetDetail}
             schedule={bottomSheetSchedule}
           />
-          
         </MapDiv>
       )}
     </ThemeProvider>
@@ -600,17 +604,6 @@ const FindRouteButton = styled.button`
   margin-left: 5px;
 `;
 
-const CameraButton  = styled.button`
-  width: 48px;
-  height: 48px;
-  background: none;
-  background-image: url(${CameraIcon});
-  background-size: cover;
-  border: none;
-  padding: 0;
-  margin-left: 5px;
-`;
-
 const MenuButton = styled.button`
   position: absolute;
   width: 25px;
@@ -625,11 +618,11 @@ const ChipContainer = styled.div`
   display: ${(props) => (props.$visible ? "flex" : "none")};
   position: fixed;
   top: 102px;
-  left: 50%;
+  left: 70%;
   transform: translateX(-65%);
-  max-width: 100%;
+  max-width: 100vw;
   margin-left: 0;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
 `;
 
