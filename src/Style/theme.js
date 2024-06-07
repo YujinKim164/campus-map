@@ -42,6 +42,7 @@ export const theme = {
     pink_25: "#EA4335",
     White: "#FFFFFF",
     gray_100: "#D9D9D9", // placeholder
+    gray_80: "#747775", // chip detail
     gray_20: "#C1C0C9", // copyright
     gray_50: "#DADADA", // menu divider
     gray_70: "#8E918F", // cancel button

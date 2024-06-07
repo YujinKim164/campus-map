@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 import CaretLeft from "../../../Assets/img/CaretLeft.png";
@@ -85,7 +84,6 @@ const AppBuildingNTH = () => {
           )}
         </CardsContainer>
       </Div>
-      <Link to="/building">{t("facilities")}</Link>
     </ThemeProvider>
   );
 };

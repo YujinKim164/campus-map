@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 import CaretLeft from "../../../Assets/img/CaretLeft.png";
@@ -31,7 +30,7 @@ const AppBuildingIRC = () => {
     const fetchData = async () => {
       try {
         const studentUnionDocRef = doc(db, "한동대학교", "산학협력관");
-        
+
         const floorsData = [];
         const collections = ["오피스"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
 
@@ -39,7 +38,7 @@ const AppBuildingIRC = () => {
           const collectionRef = collection(studentUnionDocRef, collectionName);
           const floorDocs = await getDocs(collectionRef);
 
-          floorDocs.forEach(doc => {
+          floorDocs.forEach((doc) => {
             floorsData.push({
               id: doc.id,
               ...doc.data(),
@@ -71,16 +70,18 @@ const AppBuildingIRC = () => {
         </CategoryDiv>
         <CardsContainer>
           {data ? (
-            data.map(item => (
+            data.map((item) => (
               <Card key={item.id}>
                 <CardGrid>
                   <CardHeaderLeft>이름</CardHeaderLeft>
                   <CardHeaderRight>정보</CardHeaderRight>
                   <CardBodyLeft>{item.id}</CardBodyLeft>
                   <CardBodyRight>
-                    {Object.keys(item).filter(key => key !== 'id').map(key => (
-                      <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
-                    ))}
+                    {Object.keys(item)
+                      .filter((key) => key !== "id")
+                      .map((key) => (
+                        <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
+                      ))}
                   </CardBodyRight>
                 </CardGrid>
               </Card>
@@ -90,12 +91,11 @@ const AppBuildingIRC = () => {
           )}
         </CardsContainer>
       </Div>
-      <Link to="/building">{t("facilities")}</Link>
     </ThemeProvider>
   );
 };
 
-export default AppBuildingIRC
+export default AppBuildingIRC;
 
 const Div = styled.div`
   padding-left: 23px;

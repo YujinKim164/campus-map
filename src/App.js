@@ -19,8 +19,8 @@ import AppBuildingHappy from "./Components/App/App_Building_Components/AppBuildi
 import AppBuildingIRC from "./Components/App/App_Building_Components/AppBuildingIRC";
 import AppBuildingCSH from "./Components/App/App_Building_Components/AppBuildingCSH";
 import AppBuildingKGH from "./Components/App/App_Building_Components/AppBuildingKGH";
-
 import AppSettingReport from "./Components/App/App_Setting_Components/AppSettingReport";
+import AppMapChipDetail from "./Components/App/App_Map_Components/AppMapChipDetail";
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
           {/* 기본 화면 설정 */}
           {/* <Route path="/" element={<HomePage />} /> */}
           <Route path="/" element={<MapPage />} />
+          <Route path="/chip" element={<AppMapChipDetail />} />
           <Route path="/building" element={<BuildingPage />} />
           <Route path="/building/student" element={<AppBuildingStudent />} />
           <Route path="/building/oh" element={<AppBuildingOH />} />
