@@ -153,7 +153,6 @@ const Detail = styled.div`
 const Vector = styled.div`
   width: 40px;
   height: 40px;
-  margin-left: 11px;
   background-image: url(${CaretLeftGray});
   background-size: cover;
 `;

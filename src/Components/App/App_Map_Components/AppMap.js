@@ -394,7 +394,6 @@ const AppMap = () => {
     setBottomSheetOpen(true);
   };
   const handleChipClick = async (chipType) => {
-    
     if (chipType === "camera") {
       handleCameraClick();
       return;
@@ -409,7 +408,6 @@ const AppMap = () => {
       console.error(`Invalid chip type: ${chipType}`);
       return;
     }
-
 
     try {
       for (const path of chips[chipType]) {
@@ -485,7 +483,9 @@ const AppMap = () => {
               <Chip onClick={() => handleChipClick("food")}>🍴{t("food")}</Chip>
               <Chip onClick={() => handleChipClick("cafe")}>☕{t("cafe")}</Chip>
               <Chip onClick={() => handleChipClick("cvs")}>🍱{t("cvs")}</Chip>
-              <Chip onClick={() => handleChipClick("camera")}>📷{t("건물인식")}</Chip>
+              <Chip onClick={() => handleChipClick("camera")}>
+                📷{t("detection")}
+              </Chip>
             </ChipWrapper>
             {isNavOpen && <Navigation />}
           </ChipContainer>
@@ -534,7 +534,6 @@ const AppMap = () => {
                 />
               ))}
             </NaverMap>
-            
           )}
           <YOLO_Modal show={show} handleClose={handleClose} />
           <BottomSheet
@@ -544,7 +543,6 @@ const AppMap = () => {
             content={bottomSheetContent}
             detail={bottomSheetDetail}
           />
-          
         </MapDiv>
       )}
     </ThemeProvider>
@@ -613,11 +611,11 @@ const ChipContainer = styled.div`
   display: ${(props) => (props.$visible ? "flex" : "none")};
   position: fixed;
   top: 102px;
-  left: 50%;
+  left: 70%;
   transform: translateX(-65%);
-  max-width: 100%;
+  max-width: 100vw;
   margin-left: 0;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
 `;
 
