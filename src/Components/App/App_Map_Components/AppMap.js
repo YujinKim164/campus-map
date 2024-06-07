@@ -196,7 +196,6 @@ const AppMap = () => {
     try {
       const db = getFirestore();
 
-      let filteredData = null;
       let found = false;
 
       for (const buildingName in buildingMap) {
@@ -209,40 +208,18 @@ const AppMap = () => {
 
           if (buildingDoc.exists()) {
             const buildingData = buildingDoc.data();
-            const floorKeys = Object.keys(buildingData);
+            const polygonId = buildingMap[buildingId];
 
-            for (const floorKey of floorKeys) {
-              console.log(`Processing floor: ${floorKey}`);
-
-              const facilitiesCollection = collection(
-                db,
-                `한동대학교/${buildingId}/${floorKey}`
+            if (polygonId) {
+              handlePolygonClick(
+                buildingName,
+                buildingData.content,
+                buildingData.detail
               );
-              const facilitiesSnapshot = await getDocs(facilitiesCollection);
-
-              for (const facilityDoc of facilitiesSnapshot.docs) {
-                const facilityData = facilityDoc.data();
-                const facilityName = facilityDoc.id;
-
-                if (
-                  facilityName.toLowerCase().includes(searchQuery.toLowerCase())
-                ) {
-                  console.log(`Found facility: ${facilityName}`, facilityData);
-
-                  const polygonId = buildingMap[buildingId];
-                  if (polygonId) {
-                    handlePolygonClick(polygonId);
-                    found = true;
-                    break;
-                  }
-                }
-              }
-
-              if (found) break; // 층 내부에서 검색어에 해당하는 데이터를 찾으면 반복문 종료
+              found = true;
+              break;
             }
           }
-
-          if (found) break; // 건물에서 검색어에 해당하는 데이터를 찾으면 반복문 종료
         }
       }
 
