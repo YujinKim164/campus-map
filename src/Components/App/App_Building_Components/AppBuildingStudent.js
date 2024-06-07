@@ -73,7 +73,7 @@ const AppBuildingStudent = () => {
                     {Object.keys(item)
                       .filter((key) => key !== "id")
                       .map((key) => (
-                        <CardText key={key}>{`${item[key]}`}</CardText>
+                        <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
                       ))}
                   </CardBodyRight>
                 </CardGrid>
