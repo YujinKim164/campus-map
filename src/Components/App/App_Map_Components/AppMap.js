@@ -24,7 +24,6 @@ import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
 import { useTranslation } from "react-i18next";
 import i18n from "./../../../locales/i18n";
 import Modal from "react-modal";
-import placesData from "./../../../places.json";
 import BottomSheet from "./BottomSheet";
 import { chips } from "./chips";
 
@@ -626,8 +625,6 @@ const SearchContainer = styled.div`
 
 const InputGroup = styled.div`
   position: relative;
-  width: 100%;
-  max-width: 768px;
   display: flex;
   align-items: center;
 `;
