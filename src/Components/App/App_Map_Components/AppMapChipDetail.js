@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 import {
   getFirestore,
   collection,
@@ -115,7 +114,6 @@ const AppMapChipDetail = () => {
           </Detail>
         </MenuDiv>
       ))}
-      <Link to="/">홈페이지</Link>
     </ThemeProvider>
   );
 };

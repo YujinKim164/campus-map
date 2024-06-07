@@ -22,7 +22,7 @@ const AppBuildingANH = () => {
         const studentUnionDocRef = doc(db, "한동대학교", "올네이션스홀");
 
         const floorsData = [];
-        const collections = ["1층", "2층", "3층", "4층"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
+        const collections = ["1층", "2층", "3층", "4층"];
 
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);
@@ -73,6 +73,7 @@ const AppBuildingANH = () => {
                   <CardBodyRight>
                     {Object.keys(item)
                       .filter((key) => key !== "id")
+                      .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
                         <CardText key={key}>{`${item[key]}`}</CardText>
                       ))}
@@ -199,11 +200,15 @@ const CardHeaderRight = styled.div`
 `;
 
 const CardBodyLeft = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  white-space: nowrap; // 줄 바꿈 방지
 `;
 
 const CardBodyRight = styled.div`

@@ -80,8 +80,13 @@ const AppBuildingStudent = () => {
                   <CardBodyRight>
                     {Object.keys(item)
                       .filter((key) => key !== "id")
+                      .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
-                        <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
+                        <CardText key={key}>
+                          {selectedCategory === "food" || selectedCategory === "office"
+                            ? `${item[key]}`
+                            : `${key}: ${item[key]}`}
+                        </CardText>
                       ))}
                   </CardBodyRight>
                 </CardGrid>
@@ -145,7 +150,7 @@ const Category = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
+  width: 100px;
   height: 40px;
   border-radius: 20px;
   color: ${(props) =>
@@ -172,6 +177,7 @@ const Card = styled.div`
   box-shadow: 0 0 0 1px ${(props) => props.theme.colors.Primary_blue};
   display: flex;
   flex-direction: column;
+  overflow: auto; // 카드를 넘어서지 않도록 수정
 `;
 
 const CardGrid = styled.div`
@@ -206,11 +212,15 @@ const CardHeaderRight = styled.div`
 `;
 
 const CardBodyLeft = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  white-space: nowrap; // 줄 바꿈 방지
 `;
 
 const CardBodyRight = styled.div`
@@ -218,6 +228,8 @@ const CardBodyRight = styled.div`
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  white-space: nowrap; // 줄 바꿈 방지
+  overflow: auto; // 내용을 넘어서지 않도록 수정
 `;
 
 const CardText = styled.div`
@@ -225,3 +237,4 @@ const CardText = styled.div`
   color: ${(props) => props.theme.colors.black_80};
   text-align: center;
 `;
+

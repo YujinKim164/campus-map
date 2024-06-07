@@ -30,12 +30,15 @@ const AppBuildingHCA = () => {
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);
           const floorDocs = await getDocs(collectionRef);
-          fetchedData[collectionName] = floorDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          fetchedData[collectionName] = floorDocs.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
         }
 
         setData({
           annex: fetchedData["채플 별관"] || [],
-          main: fetchedData["채플 본관"] || []
+          main: fetchedData["채플 본관"] || [],
         });
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -54,10 +57,16 @@ const AppBuildingHCA = () => {
       <Div>
         <BuildingTxt>{t("HCA")}</BuildingTxt>
         <CategoryDiv>
-          <Category onClick={() => handleCategoryClick("annex")} clicked={selectedCategory === "annex"}>
+          <Category
+            onClick={() => handleCategoryClick("annex")}
+            clicked={selectedCategory === "annex"}
+          >
             {t("annex")}
           </Category>
-          <Category onClick={() => handleCategoryClick("main")} clicked={selectedCategory === "main"}>
+          <Category
+            onClick={() => handleCategoryClick("main")}
+            clicked={selectedCategory === "main"}
+          >
             {t("main building")}
           </Category>
         </CategoryDiv>
@@ -72,6 +81,7 @@ const AppBuildingHCA = () => {
                   <CardBodyRight>
                     {Object.keys(item)
                       .filter((key) => key !== "id")
+                      .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
                         <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
                       ))}
@@ -134,11 +144,12 @@ const CategoryDiv = styled.div`
 `;
 
 const Category = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
+  width: 100px;
   height: 40px;
+  padding: 0 10px;
   border-radius: 20px;
   color: ${(props) =>
     props.clicked ? props.theme.colors.White : props.theme.colors.Primary_blue};
