@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
 import Modal from "react-modal";
@@ -41,7 +40,6 @@ const AppSetting = () => {
             <LeftVector onClick={() => navigate("/")} />
             <TopAppBarTxt>{t("settings")}</TopAppBarTxt>
           </TopAppBar>
-          <MenuDiv>{t("size")}</MenuDiv>
           <MenuDiv onClick={openModal}>
             {t("language")}
             <LanguageDetail>
@@ -62,7 +60,6 @@ const AppSetting = () => {
         </Content>
         <Bottom>
           <Copyright>© SE8. All Rights Reserved</Copyright>
-          <Link to="/">{t("homePage")}</Link>
         </Bottom>
 
         {/* 모달 창 */}

@@ -634,7 +634,7 @@ const SearchInput = styled.input`
   border-color: ${(props) => props.theme.colors.Primary_blue};
   border-width: 2px;
   border-radius: 8px;
-  padding: 16px 67px 15px 47px;
+  padding: 16px 30px 15px 40px;
   font-size: ${(props) => props.theme.fontSizes.Body5};
 
   &::placeholder {
@@ -671,18 +671,24 @@ const MenuButton = styled.button`
 `;
 const ChipContainer = styled.div`
   display: ${(props) => (props.$visible ? "flex" : "none")};
-  position: absolute;
+  position: fixed;
   top: 102px;
-  margin-left: 13px;
+  left: 50%; /* 화면의 중앙으로 이동 */
+  transform: translateX(
+    -65%
+  ); /* left: 50%를 기준으로 왼쪽으로 50%만큼 이동하여 화면의 중앙에 위치시킵니다. */
+  max-width: 100%;
+  margin-left: 0;
   overflow-x: auto;
   overflow-y: hidden;
   z-index: 1000;
 `;
+
 const ChipWrapper = styled.div`
   display: flex;
   white-space: nowrap;
-  margin-bottom: 5px;
-  gap: 8px; // 10px -> 8px
+  margin-top: 12px;
+  gap: 8px;
 `;
 const Chip = styled.div`
   display: flex;
