@@ -21,7 +21,6 @@ import { theme } from "../../../Style/theme";
 import axios from "axios";
 import FindRoute from "../../../Assets/img/FindRoute.png";
 import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
-import CameraIcon from "../../../Assets/img/CameraIcon.png"; // Add Camera icon
 import { useTranslation } from "react-i18next";
 import i18n from "./../../../locales/i18n";
 import YOLO_Modal from "./YOLO_Modal"; // Import the renamed modal component
@@ -395,6 +394,12 @@ const AppMap = () => {
     setBottomSheetOpen(true);
   };
   const handleChipClick = async (chipType) => {
+    
+    if (chipType === "camera") {
+      handleCameraClick();
+      return;
+    }
+
     console.log(`handleChipClick called with type: ${chipType}`);
     navigate("/chip", { state: { chipType } });
 
@@ -404,6 +409,7 @@ const AppMap = () => {
       console.error(`Invalid chip type: ${chipType}`);
       return;
     }
+
 
     try {
       for (const path of chips[chipType]) {
@@ -472,7 +478,6 @@ const AppMap = () => {
               <FindRouteButton onClick={handleSearch} />
               <MenuButton onClick={toggleNav} />
             </InputGroup>
-            <CameraButton onClick={handleCameraClick} /> {/* 카메라 버튼 추가 */}
             {isNavOpen && <Navigation />}
           </SearchContainer>
           <ChipContainer $visible={isContainersVisible}>
@@ -480,6 +485,7 @@ const AppMap = () => {
               <Chip onClick={() => handleChipClick("food")}>🍴{t("food")}</Chip>
               <Chip onClick={() => handleChipClick("cafe")}>☕{t("cafe")}</Chip>
               <Chip onClick={() => handleChipClick("cvs")}>🍱{t("cvs")}</Chip>
+              <Chip onClick={() => handleChipClick("camera")}>📷{t("건물인식")}</Chip>
             </ChipWrapper>
             {isNavOpen && <Navigation />}
           </ChipContainer>
@@ -587,17 +593,6 @@ const FindRouteButton = styled.button`
   height: 48px;
   background: none;
   background-image: url(${FindRoute});
-  background-size: cover;
-  border: none;
-  padding: 0;
-  margin-left: 5px;
-`;
-
-const CameraButton  = styled.button`
-  width: 48px;
-  height: 48px;
-  background: none;
-  background-image: url(${CameraIcon});
   background-size: cover;
   border: none;
   padding: 0;
