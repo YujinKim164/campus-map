@@ -4,9 +4,10 @@
   left: 0;
   right: 0;
   height: 50%;
-  background: white;
+  background: #ffffff; 
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  border: 10px solid rgb(39, 178, 243); /* 테두리 색상과 두께 설정 */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   will-change: transform;
   touch-action: none;
@@ -15,6 +16,44 @@
 
 .bottom-sheet-content {
   padding: 16px;
+  color: #333; /* 텍스트 색상 */
+}
+
+.bottom-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.bottom-sheet-header h2 {
+  margin-top: 0;
+  margin-right: 16px;
+  color: #333; /* 타이틀 색상 */
+}
+
+.bottom-sheet-header img {
+  width: 150px; /* 정사각형 크기 설정 */
+  height: 150px; /* 정사각형 크기 설정 */
+  object-fit: cover;
+}
+
+.bottom-sheet-content p {
+  color: #333; /* 설명 텍스트 색상 */
+}
+
+.bottom-sheet-content button {
+  background-color: #2eb8fd;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bottom-sheet-content button:hover {
+  background-color: #00408b;
 }
 
 .dimmer {
