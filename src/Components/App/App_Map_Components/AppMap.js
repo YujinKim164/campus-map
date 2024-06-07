@@ -201,6 +201,7 @@ const AppMap = () => {
         new navermaps.LatLng(36.10388, 129.386484),
         new navermaps.LatLng(36.103605, 129.387548),
       ],
+      aliases: ["느헴"],
     },
     {
       id: "NTH",
@@ -238,6 +239,7 @@ const AppMap = () => {
         new navermaps.LatLng(36.1027, 129.3888),
         new navermaps.LatLng(36.1026, 129.3894),
       ],
+      aliases: ["학관"],
     },
     {
       id: "OH",
@@ -331,23 +333,7 @@ const AppMap = () => {
         new navermaps.LatLng(36.10450887560636, 129.38989983849623),
       ],
     },
-    // 다른 건물 정보를 추가할 수 있습니다.
   ];
-
-  const buildingMap = {
-    오석관: "OH",
-    현동홀: "HDH",
-    느헤미야홀: "NMH",
-    뉴턴홀: "NTH",
-    올네이션스홀: "ANH",
-    학생회관: "SU",
-    코너스톤홀: "CSH",
-    복지동: "happiness",
-    에벤에셀관: "EBEN",
-    그레이스스쿨: "KGH",
-    언어교육원: "GLC",
-    효암채플: "HCA",
-  };
 
   const handleSearch = async () => {
     console.log("handleSearch called with query:", searchQuery);
@@ -360,7 +346,13 @@ const AppMap = () => {
       let found = false;
 
       for (const building of polygonData) {
-        if (building.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+        const aliases = building.aliases || [];
+        if (
+          building.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          aliases.some((alias) =>
+            alias.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        ) {
           console.log(`Processing building: ${building.name}`);
           handlePolygonClick(
             t(building.name),
