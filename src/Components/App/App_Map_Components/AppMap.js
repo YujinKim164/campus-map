@@ -21,8 +21,10 @@ import { theme } from "../../../Style/theme";
 import axios from "axios";
 import FindRoute from "../../../Assets/img/FindRoute.png";
 import NavigationDrawer from "../../../Assets/img/NavigationDrawer.png";
+import CameraIcon from "../../../Assets/img/CameraIcon.png"; // Add Camera icon
 import { useTranslation } from "react-i18next";
 import i18n from "./../../../locales/i18n";
+import YOLO_Modal from "./YOLO_Modal"; // Import the renamed modal component
 import Modal from "react-modal";
 import BottomSheet from "./BottomSheet";
 import { chips } from "./chips";
@@ -126,6 +128,17 @@ const AppMap = () => {
 
     loadOpenPlaces();
   }, []);
+
+  // YOLO Modal set
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const handleCameraClick = () => {
+    setShow(true);
+  };
+
   // 현재 위치 받아오기
   const handleCurrentLocation = useCallback(() => {
     if (navigator.geolocation) {
@@ -459,6 +472,7 @@ const AppMap = () => {
               <FindRouteButton onClick={handleSearch} />
               <MenuButton onClick={toggleNav} />
             </InputGroup>
+            <CameraButton onClick={handleCameraClick} /> {/* 카메라 버튼 추가 */}
             {isNavOpen && <Navigation />}
           </SearchContainer>
           <ChipContainer $visible={isContainersVisible}>
@@ -514,7 +528,9 @@ const AppMap = () => {
                 />
               ))}
             </NaverMap>
+            
           )}
+          <YOLO_Modal show={show} handleClose={handleClose} />
           <BottomSheet
             isOpen={isBottomSheetOpen}
             onClose={() => setBottomSheetOpen(false)}
@@ -522,6 +538,7 @@ const AppMap = () => {
             content={bottomSheetContent}
             detail={bottomSheetDetail}
           />
+          
         </MapDiv>
       )}
     </ThemeProvider>
@@ -575,6 +592,18 @@ const FindRouteButton = styled.button`
   padding: 0;
   margin-left: 5px;
 `;
+
+const CameraButton  = styled.button`
+  width: 48px;
+  height: 48px;
+  background: none;
+  background-image: url(${CameraIcon});
+  background-size: cover;
+  border: none;
+  padding: 0;
+  margin-left: 5px;
+`;
+
 const MenuButton = styled.button`
   position: absolute;
   width: 25px;
