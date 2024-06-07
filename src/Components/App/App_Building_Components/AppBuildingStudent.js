@@ -82,11 +82,7 @@ const AppBuildingStudent = () => {
                       .filter((key) => key !== "id")
                       .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
-                        <CardText key={key}>
-                          {selectedCategory === "food" || selectedCategory === "office"
-                            ? `${item[key]}`
-                            : `${key}: ${item[key]}`}
-                        </CardText>
+                        <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
                       ))}
                   </CardBodyRight>
                 </CardGrid>
