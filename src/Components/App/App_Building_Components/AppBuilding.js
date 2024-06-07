@@ -20,7 +20,9 @@ const AppBuilding = () => {
       <MenuDiv onClick={() => navigate("/building/student")}>
         {t("student")}
       </MenuDiv>
-      <MenuDiv onClick={() => navigate("/building/happy")}>{t("happiness")}</MenuDiv>
+      <MenuDiv onClick={() => navigate("/building/happiness")}>
+        {t("happiness")}
+      </MenuDiv>
       <MenuDiv onClick={() => navigate("/building/hdh")}>{t("HDH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/oh")}>{t("OH")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/nth")}>{t("NTH")}</MenuDiv>
