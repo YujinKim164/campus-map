@@ -81,6 +81,7 @@ const AppBuildingHCA = () => {
                   <CardBodyRight>
                     {Object.keys(item)
                       .filter((key) => key !== "id")
+                      .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
                         <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
                       ))}
@@ -146,6 +147,7 @@ const Category = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100px;
   height: 40px;
   padding: 0 10px;
   border-radius: 20px;

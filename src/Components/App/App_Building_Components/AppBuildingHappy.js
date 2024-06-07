@@ -81,8 +81,9 @@ const AppBuildingHappy = () => {
                   <CardBodyRight>
                     {Object.keys(item)
                       .filter((key) => key !== "id")
+                      .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
-                        <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
+                        <CardText key={key}>{`${item[key]}`}</CardText>
                       ))}
                   </CardBodyRight>
                 </CardGrid>
@@ -146,6 +147,7 @@ const Category = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100px;
   height: 40px;
   padding: 0 10px;
   border-radius: 20px;
@@ -208,11 +210,15 @@ const CardHeaderRight = styled.div`
 `;
 
 const CardBodyLeft = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  white-space: nowrap; // 줄 바꿈 방지
 `;
 
 const CardBodyRight = styled.div`

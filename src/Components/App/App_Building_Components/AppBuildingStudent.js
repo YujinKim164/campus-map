@@ -12,28 +12,33 @@ import { collection, getDocs, doc } from "firebase/firestore";
 const AppBuildingStudent = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedFloor, setSelectedFloor] = useState("강의실");
-  const [data, setData] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("food");
+  const [data, setData] = useState({ food: [], rental: [], lecture: [], office: [] });
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const studentUnionDocRef = doc(db, "한동대학교", "학생회관");
 
-        const floorsData = [];
-        const collections = ["강의실", "대여 장소", "식당", "오피스"];
+        const collections = ["식당", "대여 장소", "강의실", "오피스"];
+        const fetchedData = {};
 
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);
           const floorDocs = await getDocs(collectionRef);
-
-          floorsData[collectionName] = floorDocs.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
+          fetchedData[collectionName] = floorDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         }
 
-        setData(floorsData);
+        setData({
+          food: fetchedData["식당"] || [],
+          rental: fetchedData["대여 장소"] || [],
+          lecture: fetchedData["강의실"] || [],
+          office: fetchedData["오피스"] || []
+        });
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -51,19 +56,22 @@ const AppBuildingStudent = () => {
       <Div>
         <BuildingTxt>{t("student")}</BuildingTxt>
         <CategoryDiv>
-          {["강의실", "대여 장소", "식당", "오피스"].map((floor) => (
-            <Category
-              key={floor}
-              onClick={() => setSelectedFloor(floor)}
-              clicked={selectedFloor === floor}
-            >
-              {floor}
-            </Category>
-          ))}
+          <Category onClick={() => handleCategoryClick("food")} clicked={selectedCategory === "food"}>
+            {t("food")}
+          </Category>
+          <Category onClick={() => handleCategoryClick("rental")} clicked={selectedCategory === "rental"}>
+            {t("rental")}
+          </Category>
+          <Category onClick={() => handleCategoryClick("lecture")} clicked={selectedCategory === "lecture"}>
+            {t("lecture")}
+          </Category>
+          <Category onClick={() => handleCategoryClick("office")} clicked={selectedCategory === "office"}>
+            {t("office")}
+          </Category>
         </CategoryDiv>
         <CardsContainer>
-          {data[selectedFloor] ? (
-            data[selectedFloor].map((item) => (
+          {data[selectedCategory]?.length > 0 ? (
+            data[selectedCategory].map((item) => (
               <Card key={item.id}>
                 <CardGrid>
                   <CardHeaderLeft>이름</CardHeaderLeft>
@@ -72,8 +80,13 @@ const AppBuildingStudent = () => {
                   <CardBodyRight>
                     {Object.keys(item)
                       .filter((key) => key !== "id")
+                      .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
-                        <CardText key={key}>{`${item[key]}`}</CardText>
+                        <CardText key={key}>
+                          {selectedCategory === "food" || selectedCategory === "office"
+                            ? `${item[key]}`
+                            : `${key}: ${item[key]}`}
+                        </CardText>
                       ))}
                   </CardBodyRight>
                 </CardGrid>
@@ -134,11 +147,11 @@ const CategoryDiv = styled.div`
 `;
 
 const Category = styled.div`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: 100px;
   height: 40px;
-  padding: 0 10px;
   border-radius: 20px;
   color: ${(props) =>
     props.clicked ? props.theme.colors.White : props.theme.colors.Primary_blue};
@@ -150,7 +163,6 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 40px;
-  white-space: nowrap;
 `;
 
 const CardsContainer = styled.div`
@@ -165,6 +177,7 @@ const Card = styled.div`
   box-shadow: 0 0 0 1px ${(props) => props.theme.colors.Primary_blue};
   display: flex;
   flex-direction: column;
+  overflow: auto; // 카드를 넘어서지 않도록 수정
 `;
 
 const CardGrid = styled.div`
@@ -199,11 +212,15 @@ const CardHeaderRight = styled.div`
 `;
 
 const CardBodyLeft = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   border-right: 1px solid ${(props) => props.theme.colors.Primary_blue};
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  white-space: nowrap; // 줄 바꿈 방지
 `;
 
 const CardBodyRight = styled.div`
@@ -211,6 +228,8 @@ const CardBodyRight = styled.div`
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  white-space: nowrap; // 줄 바꿈 방지
+  overflow: auto; // 내용을 넘어서지 않도록 수정
 `;
 
 const CardText = styled.div`
@@ -218,3 +237,4 @@ const CardText = styled.div`
   color: ${(props) => props.theme.colors.black_80};
   text-align: center;
 `;
+
