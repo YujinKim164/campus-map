@@ -171,6 +171,169 @@ const AppMap = () => {
     }, 2000);
   }, []);
 
+  const polygonData = [
+    {
+      id: "HDH",
+      name: "현동홀",
+      content: "Polygon HDH Information",
+      detail: "hdh",
+      paths: [
+        new navermaps.LatLng(36.103473, 129.388947),
+        new navermaps.LatLng(36.104024, 129.389165),
+        new navermaps.LatLng(36.10418, 129.388815),
+        new navermaps.LatLng(36.10429, 129.388476),
+        new navermaps.LatLng(36.10431, 129.388113),
+        new navermaps.LatLng(36.104121, 129.388035),
+        new navermaps.LatLng(36.103916, 129.388844),
+        new navermaps.LatLng(36.103542, 129.388708),
+      ],
+    },
+    {
+      id: "NMH",
+      name: "느헤미야홀",
+      content: "Polygon NMH Information",
+      detail: "nmh",
+      paths: [
+        new navermaps.LatLng(36.104242, 129.387804),
+        new navermaps.LatLng(36.104245, 129.38754),
+        new navermaps.LatLng(36.10447828523909, 129.38669025012575),
+        new navermaps.LatLng(36.104072, 129.386555),
+        new navermaps.LatLng(36.10388, 129.386484),
+        new navermaps.LatLng(36.103605, 129.387548),
+      ],
+    },
+    {
+      id: "NTH",
+      name: "뉴턴홀",
+      content: "Polygon NTH Information",
+      detail: "nth",
+      paths: [
+        new navermaps.LatLng(36.1031, 129.3873),
+        new navermaps.LatLng(36.1033, 129.3865),
+        new navermaps.LatLng(36.1036, 129.3862),
+        new navermaps.LatLng(36.1033, 129.3874),
+      ],
+    },
+    {
+      id: "ANH",
+      name: "올네이션스홀",
+      content: "Polygon ANH Information",
+      detail: "anh",
+      paths: [
+        new navermaps.LatLng(36.1033, 129.3865),
+        new navermaps.LatLng(36.1036, 129.3862),
+        new navermaps.LatLng(36.1027, 129.3858),
+        new navermaps.LatLng(36.1026, 129.3862),
+      ],
+    },
+    {
+      id: "student",
+      name: "학생회관",
+      content: "Polygon SU Information",
+      detail: "student",
+      paths: [
+        new navermaps.LatLng(36.1024, 129.3898),
+        new navermaps.LatLng(36.1018, 129.3896),
+        new navermaps.LatLng(36.1021, 129.3886),
+        new navermaps.LatLng(36.1027, 129.3888),
+        new navermaps.LatLng(36.1026, 129.3894),
+      ],
+    },
+    {
+      id: "OH",
+      name: "오석관",
+      content: "Polygon OH Information",
+      detail: "oh",
+      paths: [
+        new navermaps.LatLng(36.1023391540599, 129.3869946646486),
+        new navermaps.LatLng(36.102404798781954, 129.38675239991272),
+        new navermaps.LatLng(36.10270670498624, 129.38686145831636),
+        new navermaps.LatLng(36.10273795945913, 129.38676248271895),
+        new navermaps.LatLng(36.103008184556984, 129.38687890965696),
+        new navermaps.LatLng(36.102990381196854, 129.38698106827565),
+        new navermaps.LatLng(36.103101995473764, 129.38703163194313),
+        new navermaps.LatLng(36.103061056753596, 129.38727742203233),
+      ],
+    },
+    {
+      id: "CSH",
+      name: "코너스톤홀",
+      content: "Polygon CSH Information",
+      detail: "csh",
+      paths: [
+        new navermaps.LatLng(36.10246553840461, 129.38664321458643),
+        new navermaps.LatLng(36.102546678926196, 129.38630149675132),
+        new navermaps.LatLng(36.102808066041966, 129.38640932755825),
+        new navermaps.LatLng(36.10273164849371, 129.38674008693826),
+        new navermaps.LatLng(36.10264649423963, 129.38671808066618),
+        new navermaps.LatLng(36.1026272139705, 129.38678133584253),
+        new navermaps.LatLng(36.10247524586832, 129.38672122484925),
+        new navermaps.LatLng(36.10247432161328, 129.38665458274428),
+      ],
+    },
+    {
+      id: "happiness",
+      name: "복지동",
+      content: "Polygon happiness Information",
+      detail: "happiness",
+      paths: [
+        new navermaps.LatLng(36.10200753789937, 129.38984346627404),
+        new navermaps.LatLng(36.10240337729534, 129.38998591383793),
+        new navermaps.LatLng(36.10223367616448, 129.39058862270784),
+        new navermaps.LatLng(36.10185946243513, 129.39049123700366),
+      ],
+    },
+    {
+      id: "EBEN",
+      name: "에벤에셀관",
+      content: "Polygon EBEN Information",
+      detail: "eben",
+      paths: [
+        new navermaps.LatLng(36.103470362021156, 129.39114792753975),
+        new navermaps.LatLng(36.10321746943663, 129.39208119215698),
+        new navermaps.LatLng(36.10300581281624, 129.39207754774174),
+        new navermaps.LatLng(36.1032869921518, 129.39108130411196),
+      ],
+    },
+    {
+      id: "KGH",
+      name: "김영길 그레이스스쿨",
+      content: "Polygon KGH Information",
+      detail: "kgh",
+      paths: [
+        new navermaps.LatLng(36.10287200863515, 129.3824060653951),
+        new navermaps.LatLng(36.10232044408132, 129.38284459941008),
+        new navermaps.LatLng(36.10180858863123, 129.3820797309546),
+        new navermaps.LatLng(36.102334306562014, 129.38146832720898),
+      ],
+    },
+    {
+      id: "GLC",
+      name: "언어교육원",
+      content: "Polygon GLC Information",
+      detail: "glc",
+      paths: [
+        new navermaps.LatLng(36.10484037498513, 129.38931589155865),
+        new navermaps.LatLng(36.10470996007895, 129.38975604667016),
+        new navermaps.LatLng(36.10454020658121, 129.38968428655275),
+        new navermaps.LatLng(36.104647778306834, 129.38926009412958),
+      ],
+    },
+    {
+      id: "HCA",
+      name: "효암채플",
+      content: "Polygon HCA Information",
+      detail: "hca",
+      paths: [
+        new navermaps.LatLng(36.10471025480041, 129.38996700619964),
+        new navermaps.LatLng(36.10447698553392, 129.39082039023216),
+        new navermaps.LatLng(36.10427549612388, 129.39075876855028),
+        new navermaps.LatLng(36.10450887560636, 129.38989983849623),
+      ],
+    },
+    // 다른 건물 정보를 추가할 수 있습니다.
+  ];
+
   const buildingMap = {
     오석관: "OH",
     현동홀: "HDH",
@@ -194,32 +357,18 @@ const AppMap = () => {
     }
 
     try {
-      const db = getFirestore();
-
       let found = false;
 
-      for (const buildingName in buildingMap) {
-        if (buildingName.toLowerCase().includes(searchQuery.toLowerCase())) {
-          console.log(`Processing building: ${buildingName}`);
-
-          const buildingId = buildingName;
-          const buildingDocRef = doc(db, `한동대학교/${buildingId}`);
-          const buildingDoc = await getDoc(buildingDocRef);
-
-          if (buildingDoc.exists()) {
-            const buildingData = buildingDoc.data();
-            const polygonId = buildingMap[buildingId];
-
-            if (polygonId) {
-              handlePolygonClick(
-                buildingName,
-                buildingData.content,
-                buildingData.detail
-              );
-              found = true;
-              break;
-            }
-          }
+      for (const building of polygonData) {
+        if (building.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+          console.log(`Processing building: ${building.name}`);
+          handlePolygonClick(
+            t(building.name),
+            building.content,
+            building.detail
+          );
+          found = true;
+          break;
         }
       }
 
@@ -232,46 +381,6 @@ const AppMap = () => {
       alert("검색 중 오류가 발생했습니다.");
     }
   };
-
-  // 두 좌표 간의 거리 계산 함수
-  function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // 지구 반지름 (km)
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
-    return distance;
-  }
-
-  function toRad(value) {
-    return (value * Math.PI) / 180;
-  }
-
-  // 두 좌표 간의 거리 계산 함수
-  function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // 지구 반지름 (km)
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
-    return distance;
-  }
-
-  function toRad(value) {
-    return (value * Math.PI) / 180;
-  }
 
   const handlePolygonClick = (title, content, detail) => {
     setBottomSheetTitle(title);
@@ -345,235 +454,24 @@ const AppMap = () => {
               ))} */}
               {/* 검색된 장소들 지도에 표시 */}
               {filteredMarkers}
-              <Polygon
-                id="HDH"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.103473, 129.388947),
-                  new navermaps.LatLng(36.104024, 129.389165),
-                  new navermaps.LatLng(36.10418, 129.388815),
-                  new navermaps.LatLng(36.10429, 129.388476),
-                  new navermaps.LatLng(36.10431, 129.388113),
-                  new navermaps.LatLng(36.104121, 129.388035),
-                  new navermaps.LatLng(36.103916, 129.388844),
-                  new navermaps.LatLng(36.103542, 129.388708),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("HDH"), "Polygon HDH Information", "hdh")
-                }
-              />
-
-              <Polygon
-                id="NMH"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.104242, 129.387804),
-                  new navermaps.LatLng(36.104245, 129.38754),
-                  new navermaps.LatLng(36.10447828523909, 129.38669025012575),
-                  new navermaps.LatLng(36.104072, 129.386555),
-                  new navermaps.LatLng(36.10388, 129.386484),
-                  new navermaps.LatLng(36.103605, 129.387548),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("NMH"), "Polygon NMH Information", "nmh")
-                }
-              />
-
-              <Polygon
-                id="NTH"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.1031, 129.3873),
-                  new navermaps.LatLng(36.1033, 129.3865),
-                  new navermaps.LatLng(36.1036, 129.3862),
-                  new navermaps.LatLng(36.1033, 129.3874),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("NTH"), "Polygon NTH Information", "nth")
-                }
-              />
-              <Polygon
-                id="ANH"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.1033, 129.3865),
-                  new navermaps.LatLng(36.1036, 129.3862),
-                  new navermaps.LatLng(36.1027, 129.3858),
-                  new navermaps.LatLng(36.1026, 129.3862),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("ANH"), "Polygon ANH Information", "anh")
-                }
-              />
-
-              <Polygon
-                id="student"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.1024, 129.3898),
-                  new navermaps.LatLng(36.1018, 129.3896),
-                  new navermaps.LatLng(36.1021, 129.3886),
-                  new navermaps.LatLng(36.1027, 129.3888),
-                  new navermaps.LatLng(36.1026, 129.3894),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(
-                    t("student"),
-                    "Polygon SU Information",
-                    "student"
-                  )
-                }
-              />
-
-              <Polygon
-                id="OH"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.1023391540599, 129.3869946646486),
-                  new navermaps.LatLng(36.102404798781954, 129.38675239991272),
-                  new navermaps.LatLng(36.10270670498624, 129.38686145831636),
-                  new navermaps.LatLng(36.10273795945913, 129.38676248271895),
-                  new navermaps.LatLng(36.103008184556984, 129.38687890965696),
-                  new navermaps.LatLng(36.102990381196854, 129.38698106827565),
-                  new navermaps.LatLng(36.103101995473764, 129.38703163194313),
-                  new navermaps.LatLng(36.103061056753596, 129.38727742203233),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("OH"), "Polygon OH Information", "oh")
-                }
-              />
-
-              <Polygon
-                id="CSH"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.10246553840461, 129.38664321458643),
-                  new navermaps.LatLng(36.102546678926196, 129.38630149675132),
-                  new navermaps.LatLng(36.102808066041966, 129.38640932755825),
-                  new navermaps.LatLng(36.10273164849371, 129.38674008693826),
-                  new navermaps.LatLng(36.10264649423963, 129.38671808066618),
-                  new navermaps.LatLng(36.1026272139705, 129.38678133584253),
-                  new navermaps.LatLng(36.10247524586832, 129.38672122484925),
-                  new navermaps.LatLng(36.10247432161328, 129.38665458274428),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("CSH"), "Polygon CSH Information", "csh")
-                }
-              />
-
-              <Polygon
-                id="happiness"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.10200753789937, 129.38984346627404),
-                  new navermaps.LatLng(36.10240337729534, 129.38998591383793),
-                  new navermaps.LatLng(36.10223367616448, 129.39058862270784),
-                  new navermaps.LatLng(36.10185946243513, 129.39049123700366),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(
-                    t("happiness"),
-                    "Polygon happiness Information",
-                    "happiness"
-                  )
-                }
-              />
-
-              <Polygon
-                id="EBEN"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.103470362021156, 129.39114792753975),
-                  new navermaps.LatLng(36.10321746943663, 129.39208119215698),
-                  new navermaps.LatLng(36.10300581281624, 129.39207754774174),
-                  new navermaps.LatLng(36.1032869921518, 129.39108130411196),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(
-                    t("EBEN"),
-                    "Polygon EBEN Information",
-                    "eben"
-                  )
-                }
-              />
-
-              <Polygon
-                id="KGH"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.10287200863515, 129.3824060653951),
-                  new navermaps.LatLng(36.10232044408132, 129.38284459941008),
-                  new navermaps.LatLng(36.10180858863123, 129.3820797309546),
-                  new navermaps.LatLng(36.102334306562014, 129.38146832720898),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("KGH"), "Polygon KGH Information", "kgh")
-                }
-              />
-
-              <Polygon
-                id="GLC"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.10484037498513, 129.38931589155865),
-                  new navermaps.LatLng(36.10470996007895, 129.38975604667016),
-                  new navermaps.LatLng(36.10454020658121, 129.38968428655275),
-                  new navermaps.LatLng(36.104647778306834, 129.38926009412958),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("GLC"), "Polygon GLC Information", "glc")
-                }
-              />
-
-              <Polygon
-                id="HCA"
-                fillColor={fill}
-                strokeWeight={0}
-                fillOpacity={opacity}
-                clickable={true}
-                paths={[
-                  new navermaps.LatLng(36.10471025480041, 129.38996700619964),
-                  new navermaps.LatLng(36.10447698553392, 129.39082039023216),
-                  new navermaps.LatLng(36.10427549612388, 129.39075876855028),
-                  new navermaps.LatLng(36.10450887560636, 129.38989983849623),
-                ]}
-                onClick={() =>
-                  handlePolygonClick(t("HCA"), "Polygon HCA Information", "hca")
-                }
-              />
+              {polygonData.map((building) => (
+                <Polygon
+                  key={building.id}
+                  id={building.id}
+                  fillColor={fill}
+                  strokeWeight={0}
+                  fillOpacity={opacity}
+                  clickable={true}
+                  paths={building.paths}
+                  onClick={() =>
+                    handlePolygonClick(
+                      t(building.name),
+                      building.content,
+                      building.detail
+                    )
+                  }
+                />
+              ))}
             </NaverMap>
           )}
           <BottomSheet
