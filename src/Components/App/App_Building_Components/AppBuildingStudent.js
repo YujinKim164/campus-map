@@ -177,7 +177,7 @@ const Card = styled.div`
   box-shadow: 0 0 0 1px ${(props) => props.theme.colors.Primary_blue};
   display: flex;
   flex-direction: column;
-  overflow: auto; // 카드를 넘어서지 않도록 수정
+  overflow: auto;
 `;
 
 const CardGrid = styled.div`
@@ -220,21 +220,26 @@ const CardBodyLeft = styled.div`
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-  white-space: nowrap; // 줄 바꿈 방지
+  white-space: normal; // 줄 바꿈을 위해 변경
 `;
 
 const CardBodyRight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; // 내용들이 세로로 쌓이도록 설정
   padding: 16px;
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-  white-space: nowrap; // 줄 바꿈 방지
-  overflow: auto; // 내용을 넘어서지 않도록 수정
+  white-space: normal; // 줄 바꿈을 위해 변경
 `;
 
 const CardText = styled.div`
   font-size: 14px;
   color: ${(props) => props.theme.colors.black_80};
-  text-align: center;
+  text-align: center; // 텍스트를 가운데 정렬로 변경
+  white-space: normal; // 줄 바꿈을 위해 변경
+  overflow: visible; // 내용을 넘어서지 않도록 설정
 `;
 
