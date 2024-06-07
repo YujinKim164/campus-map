@@ -12,41 +12,31 @@ import { collection, getDocs, doc } from "firebase/firestore";
 const AppBuildingHappy = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [foodClicked, setFoodClicked] = useState(false);
-  const [cafeClicked, setCafeClicked] = useState(false);
-  const handleFoodClick = () => {
-    setFoodClicked(true);
-    setCafeClicked(false);
-  };
+  const [selectedCategory, setSelectedCategory] = useState("food");
+  const [data, setData] = useState({ food: [], convenient: [] });
 
-  const handleCafeClick = () => {
-    setCafeClicked(true);
-    setFoodClicked(false);
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
   };
-
-  const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const studentUnionDocRef = doc(db, "한동대학교", "복지동");
 
-        const floorsData = [];
-        const collections = ["편의시설", "식당"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
+        const collections = ["식당", "편의시설"];
+        const fetchedData = {};
 
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);
           const floorDocs = await getDocs(collectionRef);
-
-          floorDocs.forEach((doc) => {
-            floorsData.push({
-              id: doc.id,
-              ...doc.data(),
-            });
-          });
+          fetchedData[collectionName] = floorDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         }
 
-        setData(floorsData);
+        setData({
+          food: fetchedData["식당"] || [],
+          convenient: fetchedData["편의시설"] || []
+        });
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -64,16 +54,16 @@ const AppBuildingHappy = () => {
       <Div>
         <BuildingTxt>{t("happiness")}</BuildingTxt>
         <CategoryDiv>
-          <Category onClick={handleFoodClick} clicked={foodClicked}>
+          <Category onClick={() => handleCategoryClick("food")} clicked={selectedCategory === "food"}>
             {t("food")}
           </Category>
-          <Category onClick={handleCafeClick} clicked={cafeClicked}>
-            {t("cafe")}
+          <Category onClick={() => handleCategoryClick("convenient")} clicked={selectedCategory === "convenient"}>
+            {t("convenient")}
           </Category>
         </CategoryDiv>
         <CardsContainer>
-          {data ? (
-            data.map((item) => (
+          {data[selectedCategory]?.length > 0 ? (
+            data[selectedCategory].map((item) => (
               <Card key={item.id}>
                 <CardGrid>
                   <CardHeaderLeft>이름</CardHeaderLeft>

@@ -12,19 +12,8 @@ import { collection, getDocs, doc } from "firebase/firestore";
 const AppBuildingIRC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [foodClicked, setFoodClicked] = useState(false);
-  const [cafeClicked, setCafeClicked] = useState(false);
-  const handleFoodClick = () => {
-    setFoodClicked(true);
-    setCafeClicked(false);
-  };
 
-  const handleCafeClick = () => {
-    setCafeClicked(true);
-    setFoodClicked(false);
-  };
-
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,12 +53,12 @@ const AppBuildingIRC = () => {
       <Div>
         <BuildingTxt>{t("IRC")}</BuildingTxt>
         <CategoryDiv>
-          <Category onClick={handleFoodClick} clicked={foodClicked}>
+          <Category clicked={true}>
             {t("office")}
           </Category>
         </CategoryDiv>
         <CardsContainer>
-          {data ? (
+          {data.length > 0 ? (
             data.map((item) => (
               <Card key={item.id}>
                 <CardGrid>
@@ -147,13 +136,10 @@ const Category = styled.div`
   width: 60px;
   height: 40px;
   border-radius: 20px;
-  color: ${(props) =>
-    props.clicked ? props.theme.colors.White : props.theme.colors.Primary_blue};
-  background-color: ${(props) =>
-    props.clicked ? props.theme.colors.Primary_blue : props.theme.colors.White};
+  color: ${(props) => props.theme.colors.White};
+  background-color: ${(props) => props.theme.colors.Primary_blue};
   border: 1px solid;
-  border-color: ${(props) =>
-    props.clicked ? "transparent" : props.theme.colors.Primary_blue};
+  border-color: "transparent";
   font-size: 16px;
   font-weight: 600;
   line-height: 40px;

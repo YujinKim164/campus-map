@@ -9,11 +9,11 @@ import CaretLeft from "../../../Assets/img/CaretLeft.png";
 import { db } from "../../../Firebase";
 import { collection, getDocs, doc } from "firebase/firestore";
 
-const AppBuildingStudent = () => {
+const AppBuildingHCA = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("food");
-  const [data, setData] = useState({ food: [], rental: [], lecture: [], office: [] });
+  const [selectedCategory, setSelectedCategory] = useState("annex");
+  const [data, setData] = useState({ annex: [], main: [] });
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -22,9 +22,9 @@ const AppBuildingStudent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const studentUnionDocRef = doc(db, "한동대학교", "학생회관");
+        const studentUnionDocRef = doc(db, "한동대학교", "효암채플");
 
-        const collections = ["식당", "대여 장소", "강의실", "오피스"];
+        const collections = ["채플 별관", "채플 본관"];
         const fetchedData = {};
 
         for (const collectionName of collections) {
@@ -34,10 +34,8 @@ const AppBuildingStudent = () => {
         }
 
         setData({
-          food: fetchedData["식당"] || [],
-          rental: fetchedData["대여 장소"] || [],
-          lecture: fetchedData["강의실"] || [],
-          office: fetchedData["오피스"] || []
+          annex: fetchedData["채플 별관"] || [],
+          main: fetchedData["채플 본관"] || []
         });
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -54,19 +52,13 @@ const AppBuildingStudent = () => {
         <TopAppBarTxt>{t("facilityDetail")}</TopAppBarTxt>
       </TopAppBar>
       <Div>
-        <BuildingTxt>{t("student")}</BuildingTxt>
+        <BuildingTxt>{t("HCA")}</BuildingTxt>
         <CategoryDiv>
-          <Category onClick={() => handleCategoryClick("food")} clicked={selectedCategory === "food"}>
-            {t("food")}
+          <Category onClick={() => handleCategoryClick("annex")} clicked={selectedCategory === "annex"}>
+            {t("annex")}
           </Category>
-          <Category onClick={() => handleCategoryClick("rental")} clicked={selectedCategory === "rental"}>
-            {t("rental")}
-          </Category>
-          <Category onClick={() => handleCategoryClick("lecture")} clicked={selectedCategory === "lecture"}>
-            {t("lecture")}
-          </Category>
-          <Category onClick={() => handleCategoryClick("office")} clicked={selectedCategory === "office"}>
-            {t("office")}
+          <Category onClick={() => handleCategoryClick("main")} clicked={selectedCategory === "main"}>
+            {t("main building")}
           </Category>
         </CategoryDiv>
         <CardsContainer>
@@ -96,7 +88,7 @@ const AppBuildingStudent = () => {
   );
 };
 
-export default AppBuildingStudent;
+export default AppBuildingHCA;
 
 const Div = styled.div`
   padding-left: 23px;

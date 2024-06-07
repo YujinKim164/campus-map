@@ -32,7 +32,7 @@ const AppBuilding = () => {
       <MenuDiv onClick={() => navigate("/building/eben")}>{t("EBEN")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/glc")}>{t("GLC")}</MenuDiv>
       <MenuDiv onClick={() => navigate("/building/irc")}>{t("IRC")}</MenuDiv>
-      <MenuDiv>{t("HCA")}</MenuDiv>
+      <MenuDiv onClick={() => navigate("/building/hca")}>{t("HCA")}</MenuDiv>
     </ThemeProvider>
   );
 };

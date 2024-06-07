@@ -19,8 +19,10 @@ import AppBuildingHappy from "./Components/App/App_Building_Components/AppBuildi
 import AppBuildingIRC from "./Components/App/App_Building_Components/AppBuildingIRC";
 import AppBuildingCSH from "./Components/App/App_Building_Components/AppBuildingCSH";
 import AppBuildingKGH from "./Components/App/App_Building_Components/AppBuildingKGH";
+import AppBuildingHCA from "./Components/App/App_Building_Components/AppBuildingHCA";
 import AppSettingReport from "./Components/App/App_Setting_Components/AppSettingReport";
 import AppMapChipDetail from "./Components/App/App_Map_Components/AppMapChipDetail";
+
 
 function App() {
   return (
@@ -45,6 +47,7 @@ function App() {
           <Route path="/building/irc" element={<AppBuildingIRC />} />
           <Route path="/building/csh" element={<AppBuildingCSH />} />
           <Route path="/building/kgh" element={<AppBuildingKGH />} />
+          <Route path="/building/hca" element={<AppBuildingHCA />} />
 
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/setting/report" element={<AppSettingReport />} />
