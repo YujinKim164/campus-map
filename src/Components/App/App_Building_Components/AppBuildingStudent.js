@@ -12,33 +12,28 @@ import { collection, getDocs, doc } from "firebase/firestore";
 const AppBuildingStudent = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("food");
-  const [data, setData] = useState({ food: [], rental: [], lecture: [], office: [] });
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
+  const [selectedFloor, setSelectedFloor] = useState("식당");
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const studentUnionDocRef = doc(db, "한동대학교", "학생회관");
 
+        const floorsData = [];
         const collections = ["식당", "대여 장소", "강의실", "오피스"];
-        const fetchedData = {};
 
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);
           const floorDocs = await getDocs(collectionRef);
-          fetchedData[collectionName] = floorDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+          floorsData[collectionName] = floorDocs.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
         }
 
-        setData({
-          food: fetchedData["식당"] || [],
-          rental: fetchedData["대여 장소"] || [],
-          lecture: fetchedData["강의실"] || [],
-          office: fetchedData["오피스"] || []
-        });
+        setData(floorsData);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -56,22 +51,19 @@ const AppBuildingStudent = () => {
       <Div>
         <BuildingTxt>{t("student")}</BuildingTxt>
         <CategoryDiv>
-          <Category onClick={() => handleCategoryClick("food")} clicked={selectedCategory === "food"}>
-            {t("food")}
-          </Category>
-          <Category onClick={() => handleCategoryClick("rental")} clicked={selectedCategory === "rental"}>
-            {t("rental")}
-          </Category>
-          <Category onClick={() => handleCategoryClick("lecture")} clicked={selectedCategory === "lecture"}>
-            {t("lecture")}
-          </Category>
-          <Category onClick={() => handleCategoryClick("office")} clicked={selectedCategory === "office"}>
-            {t("office")}
-          </Category>
+          {["식당", "대여 장소", "강의실", "오피스"].map((floor) => (
+            <Category
+              key={floor}
+              onClick={() => setSelectedFloor(floor)}
+              clicked={selectedFloor === floor}
+            >
+              {floor}
+            </Category>
+          ))}
         </CategoryDiv>
         <CardsContainer>
-          {data[selectedCategory]?.length > 0 ? (
-            data[selectedCategory].map((item) => (
+          {data[selectedFloor] ? (
+            data[selectedFloor].map((item) => (
               <Card key={item.id}>
                 <CardGrid>
                   <CardHeaderLeft>이름</CardHeaderLeft>
@@ -80,9 +72,8 @@ const AppBuildingStudent = () => {
                   <CardBodyRight>
                     {Object.keys(item)
                       .filter((key) => key !== "id")
-                      .sort() // key를 정렬하여 순서를 고정
                       .map((key) => (
-                        <CardText key={key}>{`${key}: ${item[key]}`}</CardText>
+                        <CardText key={key}>{`${item[key]}`}</CardText>
                       ))}
                   </CardBodyRight>
                 </CardGrid>
@@ -143,11 +134,12 @@ const CategoryDiv = styled.div`
 `;
 
 const Category = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 100px;
   height: 40px;
+  padding: 0 10px;
   border-radius: 20px;
   color: ${(props) =>
     props.clicked ? props.theme.colors.White : props.theme.colors.Primary_blue};
@@ -159,6 +151,7 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 40px;
+  white-space: nowrap;
 `;
 
 const CardsContainer = styled.div`
