@@ -12,7 +12,7 @@ Modal.setAppElement("#root");
 
 const AppSetting = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 현재 언어 상태 가져오기
@@ -43,7 +43,7 @@ const AppSetting = () => {
           <MenuDiv onClick={openModal}>
             {t("language")}
             <LanguageDetail>
-              {t("ko")}
+              {currentLanguage === "ko" ? t("ko") : t("en")}
               <Vector />
             </LanguageDetail>
           </MenuDiv>

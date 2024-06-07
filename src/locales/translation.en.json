@@ -33,6 +33,8 @@
 
   "size": "Text size",
   "language": "Language",
+  "ko": "Korean",
+  "en": "English",
   "version": "Version",
   "mapVersion": "Naver Map SDK version",
 
