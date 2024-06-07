@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import './BottomSheet.css';
 
-const BottomSheet = ({ isOpen, onClose, title,content,detail }) => {
+const BottomSheet = ({ isOpen, onClose, title,content,detail, schedule }) => {
   const [{ y }, api] = useSpring(() => ({ y: window.innerHeight }));
   const navigate = useNavigate();
   const open = () => {
@@ -56,7 +56,24 @@ const BottomSheet = ({ isOpen, onClose, title,content,detail }) => {
         <h2>{title}</h2>
         {detail && <img src={require("../../../Assets/img/building/"+detail+".jpeg")} alt="Content" className="bottom-sheet-image" />}
         </div>
-        <p>{content}</p>
+        <p>{t(content)}</p>
+        {schedule && (
+            <div>
+              <h3>{t("time")}</h3>
+              <ul>
+              {(() => {
+                  const items = [];
+                  for (let i = 0; i < schedule.length; i++) {
+                    if (i % 2 === 0) {
+                      items.push(<li key={i}>{t(schedule[i])} : {schedule[i+1]}</li>);
+                    }
+                    
+                  }
+                  return items;
+                })()}
+              </ul>
+            </div>
+          )}
         <button onClick={navigateToDetail}>{t("detail")}</button>
       </div>
     </animated.div>

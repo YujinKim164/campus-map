@@ -61,6 +61,7 @@ const AppMap = () => {
   const [bottomSheetContent, setBottomSheetContent] = useState("");
   const [bottomSheetTitle, setBottomSheetTitle] = useState("");
   const [bottomSheetDetail, setBottomSheetDetail] = useState("");
+  const [bottomSheetSchedule, setBottomSheetSchedule] = useState(null);
   const [map, setMap] = useState(null);
 
   const { t } = useTranslation();
@@ -189,7 +190,7 @@ const AppMap = () => {
     {
       id: "HDH",
       name: "현동홀",
-      content: "Polygon HDH Information",
+      content: "HDH Info",
       detail: "hdh",
       paths: [
         new navermaps.LatLng(36.103473, 129.388947),
@@ -205,7 +206,7 @@ const AppMap = () => {
     {
       id: "NMH",
       name: "느헤미야홀",
-      content: "Polygon NMH Information",
+      content: "NMH Info",
       detail: "nmh",
       paths: [
         new navermaps.LatLng(36.104242, 129.387804),
@@ -220,7 +221,7 @@ const AppMap = () => {
     {
       id: "NTH",
       name: "뉴턴홀",
-      content: "Polygon NTH Information",
+      content: "NTH Info",
       detail: "nth",
       paths: [
         new navermaps.LatLng(36.1031, 129.3873),
@@ -232,7 +233,7 @@ const AppMap = () => {
     {
       id: "ANH",
       name: "올네이션스홀",
-      content: "Polygon ANH Information",
+      content: "ANH Info",
       detail: "anh",
       paths: [
         new navermaps.LatLng(36.1033, 129.3865),
@@ -244,8 +245,9 @@ const AppMap = () => {
     {
       id: "student",
       name: "학생회관",
-      content: "Polygon SU Information",
+      content: "SU Info",
       detail: "student",
+      schedule:  ["moms","7:00~9:30 / 10:30~20:00 ","cafeteria","8:00~9:00 / 11:30~14:00 / 17:30~19:00","a'int", "8:30~19:00"],
       paths: [
         new navermaps.LatLng(36.1024, 129.3898),
         new navermaps.LatLng(36.1018, 129.3896),
@@ -258,7 +260,7 @@ const AppMap = () => {
     {
       id: "OH",
       name: "오석관",
-      content: "Polygon OH Information",
+      content: "OH Info",
       detail: "oh",
       paths: [
         new navermaps.LatLng(36.1023391540599, 129.3869946646486),
@@ -270,11 +272,12 @@ const AppMap = () => {
         new navermaps.LatLng(36.103101995473764, 129.38703163194313),
         new navermaps.LatLng(36.103061056753596, 129.38727742203233),
       ],
+      schedule:  ["hisbeans","09:00~21:00"],
     },
     {
       id: "CSH",
       name: "코너스톤홀",
-      content: "Polygon CSH Information",
+      content: "CSH Info",
       detail: "csh",
       paths: [
         new navermaps.LatLng(36.10246553840461, 129.38664321458643),
@@ -290,7 +293,7 @@ const AppMap = () => {
     {
       id: "happiness",
       name: "복지동",
-      content: "Polygon happiness Information",
+      content: "happiness Info",
       detail: "happiness",
       paths: [
         new navermaps.LatLng(36.10200753789937, 129.38984346627404),
@@ -298,11 +301,12 @@ const AppMap = () => {
         new navermaps.LatLng(36.10223367616448, 129.39058862270784),
         new navermaps.LatLng(36.10185946243513, 129.39049123700366),
       ],
+      schedule:  ["drop","9:00~21:00","rounge","11:30~19:00","Myeong Seong", "11:00~19:30","Burger","11:00~20:00"],
     },
     {
       id: "EBEN",
       name: "에벤에셀관",
-      content: "Polygon EBEN Information",
+      content: "EBEN Info",
       detail: "eben",
       paths: [
         new navermaps.LatLng(36.103470362021156, 129.39114792753975),
@@ -314,7 +318,7 @@ const AppMap = () => {
     {
       id: "KGH",
       name: "김영길 그레이스스쿨",
-      content: "Polygon KGH Information",
+      content: "KGH Info",
       detail: "kgh",
       paths: [
         new navermaps.LatLng(36.10287200863515, 129.3824060653951),
@@ -326,7 +330,7 @@ const AppMap = () => {
     {
       id: "GLC",
       name: "언어교육원",
-      content: "Polygon GLC Information",
+      content: "GLC Info",
       detail: "glc",
       paths: [
         new navermaps.LatLng(36.10484037498513, 129.38931589155865),
@@ -338,7 +342,7 @@ const AppMap = () => {
     {
       id: "HCA",
       name: "효암채플",
-      content: "Polygon HCA Information",
+      content: "HCA Info",
       detail: "hca",
       paths: [
         new navermaps.LatLng(36.10471025480041, 129.38996700619964),
@@ -388,10 +392,11 @@ const AppMap = () => {
     }
   };
 
-  const handlePolygonClick = (title, content, detail) => {
+  const handlePolygonClick = (title, content, detail, schedule = null) => {
     setBottomSheetTitle(title);
     setBottomSheetContent(content);
     setBottomSheetDetail(detail);
+    setBottomSheetSchedule(schedule);
     setBottomSheetOpen(true);
   };
   const handleChipClick = async (chipType) => {
@@ -522,7 +527,8 @@ const AppMap = () => {
                     handlePolygonClick(
                       t(building.name),
                       building.content,
-                      building.detail
+                      building.detail,
+                      building.schedule
                     )
                   }
                 />
@@ -537,6 +543,7 @@ const AppMap = () => {
             title={bottomSheetTitle}
             content={bottomSheetContent}
             detail={bottomSheetDetail}
+            schedule={bottomSheetSchedule}
           />
           
         </MapDiv>
