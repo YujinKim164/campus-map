@@ -30,12 +30,15 @@ const AppBuildingHappy = () => {
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);
           const floorDocs = await getDocs(collectionRef);
-          fetchedData[collectionName] = floorDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          fetchedData[collectionName] = floorDocs.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
         }
 
         setData({
           food: fetchedData["식당"] || [],
-          convenient: fetchedData["편의시설"] || []
+          convenient: fetchedData["편의시설"] || [],
         });
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -54,10 +57,16 @@ const AppBuildingHappy = () => {
       <Div>
         <BuildingTxt>{t("happiness")}</BuildingTxt>
         <CategoryDiv>
-          <Category onClick={() => handleCategoryClick("food")} clicked={selectedCategory === "food"}>
+          <Category
+            onClick={() => handleCategoryClick("food")}
+            clicked={selectedCategory === "food"}
+          >
             {t("food")}
           </Category>
-          <Category onClick={() => handleCategoryClick("convenient")} clicked={selectedCategory === "convenient"}>
+          <Category
+            onClick={() => handleCategoryClick("convenient")}
+            clicked={selectedCategory === "convenient"}
+          >
             {t("convenient")}
           </Category>
         </CategoryDiv>
@@ -134,11 +143,11 @@ const CategoryDiv = styled.div`
 `;
 
 const Category = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
   height: 40px;
+  padding: 0 10px;
   border-radius: 20px;
   color: ${(props) =>
     props.clicked ? props.theme.colors.White : props.theme.colors.Primary_blue};
@@ -150,6 +159,7 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 40px;
+  white-space: nowrap;
 `;
 
 const CardsContainer = styled.div`

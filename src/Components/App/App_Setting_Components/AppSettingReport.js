@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "../../../Style/theme";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../locales/i18n";
@@ -60,7 +59,6 @@ const AppSettingReport = () => {
           <ModalCloseButton onClick={closeModal}>{t("ok")}</ModalCloseButton>
         </ModalContent>
       </Modal>
-      <Link to="/">{t("homePage")}</Link>
     </ThemeProvider>
   );
 };

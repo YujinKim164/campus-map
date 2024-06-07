@@ -522,95 +522,12 @@ const AppMap = () => {
             content={bottomSheetContent}
             detail={bottomSheetDetail}
           />
-          {sliderVisible && selectedMarkerInfo && (
-            <Slider
-              sliderPosition={sliderPosition}
-              sliderHeight={sliderHeight}
-              handleSliderDragStart={handleSliderDragStart}
-              handleSliderDragEnd={handleSliderDragEnd}
-              handleSliderUpClick={toggleSliderHeight}
-            >
-              <SliderContent>
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      flexWrap: "wrap",
-                    }}
-                  ></div>
-                </div>
-              </SliderContent>
-            </Slider>
-          )}
         </MapDiv>
       )}
     </ThemeProvider>
   );
 };
 export default AppMap;
-
-const Slider = ({
-  sliderPosition,
-  sliderHeight,
-  handleSliderDragStart,
-  handleSliderDragEnd,
-  handleSliderUpClick,
-  children,
-}) => (
-  <div
-    style={{
-      position: "fixed",
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: sliderHeight,
-      backgroundColor: "#fff",
-      borderTopLeftRadius: "12px",
-      borderTopRightRadius: "12px",
-      boxShadow: "0px -1px 3px rgba(0,0,0,0.2)",
-      display: "flex",
-      flexDirection: "column",
-      zIndex: 1000,
-    }}
-    onMouseDown={handleSliderDragStart}
-    onMouseUp={handleSliderDragEnd}
-  >
-    <div
-      style={{
-        height: "36px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        cursor: "pointer",
-      }}
-      onClick={handleSliderUpClick}
-    >
-      <div
-        style={{
-          width: "36px",
-          height: "4px",
-          backgroundColor: "#ccc",
-          borderRadius: "2px",
-        }}
-      />
-    </div>
-    <div
-      style={{
-        flex: 1,
-        overflowY: "auto",
-        padding: "16px",
-      }}
-    >
-      {children}
-    </div>
-  </div>
-);
-
-const SliderContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 const SearchContainer = styled.div`
   display: ${(props) => (props.$isVisible ? "flex" : "none")};
@@ -620,7 +537,6 @@ const SearchContainer = styled.div`
   right: 0;
   justify-content: center;
   padding: 40px 13px 12px 13px;
-  z-index: 1000;
 `;
 
 const InputGroup = styled.div`
@@ -673,15 +589,12 @@ const ChipContainer = styled.div`
   display: ${(props) => (props.$visible ? "flex" : "none")};
   position: fixed;
   top: 102px;
-  left: 50%; /* 화면의 중앙으로 이동 */
-  transform: translateX(
-    -65%
-  ); /* left: 50%를 기준으로 왼쪽으로 50%만큼 이동하여 화면의 중앙에 위치시킵니다. */
+  left: 50%;
+  transform: translateX(-65%);
   max-width: 100%;
   margin-left: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  z-index: 1000;
 `;
 
 const ChipWrapper = styled.div`
@@ -712,7 +625,9 @@ const Navigation = () => {
   const { t } = useTranslation();
   return (
     <NavigationDrawerWrapper onClick={handleNavClick}>
-      <NavigationDrawerContent>📍 {t("map")}</NavigationDrawerContent>
+      <NavigationDrawerContent onClick={() => navigate("/")}>
+        📍 {t("map")}
+      </NavigationDrawerContent>
       <NavigationDrawerContent onClick={() => navigate("/building")}>
         🏢 {t("Facilities")}
       </NavigationDrawerContent>
@@ -751,33 +666,3 @@ const BackgroundBlur = styled.div`
   z-index: 10;
   display: ${(props) => (props.$isOpen ? "block" : "none")};
 `;
-
-const isOpenNow = (operatingHours) => {
-  const [openTime, closeTime] = operatingHours.split(" - ");
-
-  const parseTime = (time) => {
-    const [hours, minutes, period] = time
-      .match(/(\d+):(\d+)\s*(AM|PM)/)
-      .slice(1);
-    let hour = parseInt(hours);
-    if (period === "PM" && hour !== 12) hour += 12;
-    if (period === "AM" && hour === 12) hour = 0;
-    return { hours: hour, minutes: parseInt(minutes) };
-  };
-
-  const open = parseTime(openTime);
-  const close = parseTime(closeTime);
-
-  const now = new Date();
-  const nowHours = now.getHours();
-  const nowMinutes = now.getMinutes();
-
-  const isAfterOpen =
-    nowHours > open.hours ||
-    (nowHours === open.hours && nowMinutes >= open.minutes);
-  const isBeforeClose =
-    nowHours < close.hours ||
-    (nowHours === close.hours && nowMinutes <= close.minutes);
-
-  return isAfterOpen && isBeforeClose;
-};

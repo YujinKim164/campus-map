@@ -22,7 +22,7 @@ const AppBuildingANH = () => {
         const studentUnionDocRef = doc(db, "한동대학교", "올네이션스홀");
 
         const floorsData = [];
-        const collections = ["1층", "2층", "3층", "4층"]; // 필요한 하위 컬렉션 이름을 여기에 추가합니다.
+        const collections = ["1층", "2층", "3층", "4층"];
 
         for (const collectionName of collections) {
           const collectionRef = collection(studentUnionDocRef, collectionName);

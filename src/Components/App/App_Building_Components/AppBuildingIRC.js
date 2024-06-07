@@ -53,9 +53,7 @@ const AppBuildingIRC = () => {
       <Div>
         <BuildingTxt>{t("IRC")}</BuildingTxt>
         <CategoryDiv>
-          <Category clicked={true}>
-            {t("office")}
-          </Category>
+          <Category clicked={true}>{t("office")}</Category>
         </CategoryDiv>
         <CardsContainer>
           {data.length > 0 ? (
@@ -130,19 +128,23 @@ const CategoryDiv = styled.div`
 `;
 
 const Category = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
   height: 40px;
+  padding: 0 10px;
   border-radius: 20px;
-  color: ${(props) => props.theme.colors.White};
-  background-color: ${(props) => props.theme.colors.Primary_blue};
+  color: ${(props) =>
+    props.clicked ? props.theme.colors.White : props.theme.colors.Primary_blue};
+  background-color: ${(props) =>
+    props.clicked ? props.theme.colors.Primary_blue : props.theme.colors.White};
   border: 1px solid;
-  border-color: "transparent";
+  border-color: ${(props) =>
+    props.clicked ? "transparent" : props.theme.colors.Primary_blue};
   font-size: 16px;
   font-weight: 600;
   line-height: 40px;
+  white-space: nowrap;
 `;
 
 const CardsContainer = styled.div`

@@ -1,5 +1,5 @@
 {
-  "mapSearch": "Search building or place",
+  "mapSearch": "Search building",
   "food": "Food",
   "cafe": "Cafe",
   "cvs": "CVS",
@@ -46,7 +46,7 @@
   "cancel": "Cancel",
   "ok": "OK",
   "homePage": "Homepage",
-  "detail" : "Go to Detail Page",
+  "detail": "Go to Detail Page",
 
   "first": "1F",
   "second": "2F",

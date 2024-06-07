@@ -1,5 +1,5 @@
 {
-  "mapSearch": "건물명 또는 건물번호 입력",
+  "mapSearch": "건물명을 입력하세요",
   "food": "식당",
   "cafe": "카페",
   "cvs": "편의점",
@@ -10,13 +10,12 @@
   "convenient": "편의시설",
   "lecture": "강의실",
   "rental": "대여 장소",
-  "first floor":"1층",
+  "first floor": "1층",
   "second floor": "2층",
   "thrid floor": "3층",
   "fourth floor": "4층",
   "annex": "채플 별관",
   "main building": "채플 본관",
-
 
   "map": "길찾기",
   "directions": "내비게이션",
@@ -43,8 +42,6 @@
   "GLC": "언어교육원(GLC)",
   "HCA": "효암채플(HCA)",
 
-  
-
   "size": "글자 크기",
   "language": "언어",
   "ko": "한국어",
@@ -62,7 +59,7 @@
   "cancel": "취소",
   "ok": "확인",
   "homePage": "홈페이지",
-  "detail" : "상세 페이지로 가기",
+  "detail": "상세 페이지로 가기",
 
   "first": "1층",
   "second": "2층",
